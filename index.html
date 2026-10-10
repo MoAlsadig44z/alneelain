@@ -1,3 +1,9 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#120c0b">
 <title>قائمة النيلين</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@500;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=Cormorant+Garamond:wght@500;700&display=swap">
 <style>
@@ -449,7 +455,74 @@ html[dir="rtl"] .cat-head h2::after { background: linear-gradient(270deg, var(--
 .pay-d .copy.ok { animation: okpop .5s cubic-bezier(.2,.9,.3,1.4); }
 .pay-d .copy.ok::before { content: "\2713\00a0"; }
 @keyframes okpop { 0% { transform: scale(.85); } 60% { transform: scale(1.12); } 100% { transform: scale(1); } }
+
+/* ===== responsive layer ===== */
+:root { --px-l: max(16px, env(safe-area-inset-left, 0px)); --px-r: max(16px, env(safe-area-inset-right, 0px)); }
+html { overflow-x: hidden; }
+body { padding-inline: 0; padding-left: var(--px-l); padding-right: var(--px-r); min-width: 0; }
+.bar { margin-inline: 0; margin-left: calc(var(--px-l) * -1); margin-right: calc(var(--px-r) * -1); padding-left: var(--px-l); padding-right: var(--px-r); }
+img, svg, video { max-width: 100%; }
+
+/* small phones */
+@media (max-width: 380px) {
+  .hero { min-height: 380px; padding: 40px 14px 84px; border-radius: 22px; }
+  .hero::after { inset: 8px; border-radius: 15px; }
+  .hero h1 { font-size: clamp(3.2rem, 17vw, 4rem); }
+  .cta { padding: 0 26px; min-height: 50px; }
+  .cat-head { gap: 12px; padding: 12px 14px; border-radius: 20px; }
+  .cat-plate { width: 84px; height: 84px; }
+  .row { gap: 8px; padding: 12px 4px; }
+  .row .th { width: 46px; height: 46px; }
+  .row .name { font-size: 1rem; }
+  .row .price { font-size: 1.05rem; }
+  .pm { min-height: 104px; padding: 10px 12px; }
+  .pm .nm { font-size: 1.25rem; }
+  .pm .lg { width: 44px; height: 44px; }
+  .pay-d .num { font-size: 1.3rem; }
+  .pay-d .line { flex-wrap: wrap; }
+  .phone { padding: 0 18px; font-size: 1.05rem; }
+  .dish { width: 138px; }
+  .sheet-body { padding: 18px 18px 0; }
+  .sheet h2 { font-size: 1.6rem; }
+  .sheet .big { font-size: 2rem; }
+}
+
+/* short screens (phones in landscape) */
+@media (max-height: 520px) and (orientation: landscape) {
+  .hero { min-height: 0; padding-block: 36px 72px; }
+  .hero h1 { font-size: clamp(3rem, 12vh, 5rem); }
+  .art { height: 130px; }
+  .art .plate-big { width: 110px; height: 110px; }
+  .sheet { max-height: 100%; }
+  .pt { width: 130px; height: 130px; }
+  .loader { gap: 16px; }
+  .lname { font-size: clamp(2.2rem, 11vh, 3.5rem); }
+}
+
+/* tablets: wider gutters, roomier banners */
+@media (min-width: 640px) {
+  body { --px-l: max(24px, env(safe-area-inset-left, 0px)); --px-r: max(24px, env(safe-area-inset-right, 0px)); }
+  .hero { min-height: 520px; padding-block: 72px 120px; }
+  .row .name { font-size: 1.15rem; }
+  .dish { width: 176px; }
+  .dish .pl { width: 120px; height: 120px; }
+}
+
+/* desktop */
+@media (min-width: 1100px) {
+  .wrap, .bar-in { max-width: 1180px; }
+  .hero { min-height: 580px; border-radius: 36px; }
+  .items { column-gap: 56px; }
+  .chips { flex-wrap: wrap; overflow: visible; }
+  .sheet { max-width: 560px; }
+  .art { height: 290px; }
+}
+@media (hover: none) {
+  .row:hover .th, .dish:hover, .pm:hover, .cta:hover { transform: none; }
+}
 </style>
+</head>
+<body>
 
 <div class="loader" id="loader" aria-hidden="true">
   <div class="ptw"><div class="pt"><div class="water"><svg class="lw" viewBox="0 0 400 18" preserveAspectRatio="none"><path d="M0 9Q25 0 50 9T100 9T150 9T200 9T250 9T300 9T350 9T400 9V18H0Z"/></svg></div><div class="lfish" id="lfish"></div></div></div>
@@ -1445,3 +1518,5 @@ function runLoader() {
   } catch (e) { console.warn("polish layer skipped", e); }
 })();
 </script>
+</body>
+</html>
