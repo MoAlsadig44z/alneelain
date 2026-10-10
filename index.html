@@ -1,8 +1,7 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>قائمة النيلين</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@500;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=Cormorant+Garamond:wght@500;700&display=swap">
 <style>
-/* Layout: an underwater hero card (swimming fish, bubbles, light rays, floating watermelon), a moving ribbon, a sticky search + plate-icon category rail, then one banner per category with its own animated plate. */
+/* Layout: an underwater hero card (swimming fish, bubbles, light rays), a moving ribbon, a sticky search + plate-icon category rail, then one banner per category with its own animated plate. */
 :root {
   --bg: #120c0b;
   --surface: #1b1210;
@@ -93,9 +92,6 @@ button { cursor: pointer; }
 @keyframes bob { from { transform: translateY(-7px) rotate(-2deg); } to { transform: translateY(7px) rotate(2deg); } }
 @keyframes wag { from { transform: rotate(-14deg); } to { transform: rotate(14deg); } }
 
-.melon { position: absolute; right: 2%; bottom: 12px; width: 92px; animation: float 7s ease-in-out infinite alternate; filter: drop-shadow(0 10px 14px rgba(0,0,0,.45)); }
-.melon svg { display: block; width: 100%; height: auto; }
-@keyframes float { from { transform: translateY(-12px) rotate(-14deg); } to { transform: translateY(10px) rotate(-3deg); } }
 
 .hero-in { position: relative; z-index: 2; }
 .hero .kicker { color: var(--gold); letter-spacing: .18em; font-size: .8rem; text-transform: uppercase; font-weight: 500; }
@@ -239,17 +235,29 @@ footer h2 { font-family: var(--f-display); font-size: 1.4rem; margin: 0; }
 .pay-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 @media (max-width: 339px) { .pay-grid { grid-template-columns: 1fr; } }
 .pm {
-  --c: var(--gold); --ic: #fff; min-width: 0; min-height: 68px; padding: 10px 12px; display: flex; align-items: center; gap: 12px;
-  border-radius: 18px; border: 1px solid var(--line); text-align: start;
-  background: linear-gradient(135deg, color-mix(in srgb, var(--c) 24%, transparent), transparent 72%), var(--surface);
-  transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+  --c: var(--gold); --ic: #fff; position: relative; overflow: hidden; min-width: 0; min-height: 118px; padding: 12px 14px 12px; display: flex; flex-direction: column; align-items: flex-start; justify-content: space-between; gap: 6px;
+  border-radius: 20px; border: 0; text-align: start; color: var(--ic);
+  background: linear-gradient(145deg, var(--c), color-mix(in srgb, var(--c) 50%, #000));
+  box-shadow: 0 16px 26px -18px var(--c);
+  transition: transform .3s cubic-bezier(.2,.8,.3,1.2), box-shadow .3s ease, opacity .3s ease, filter .3s ease;
 }
-.pm:hover { transform: translateY(-2px); border-color: var(--c); }
-.pm:active { transform: scale(.98); }
-.pm[aria-pressed="true"] { border-color: var(--c); box-shadow: 0 0 0 2px color-mix(in srgb, var(--c) 45%, transparent); }
-.pm .lg { flex: none; width: 44px; height: 44px; border-radius: 14px; display: grid; place-items: center; background: var(--c); box-shadow: 0 6px 14px -6px var(--c); }
-.pm .lg svg { width: 24px; height: 24px; fill: var(--ic); }
-.pm .nm { font-family: var(--f-display); font-weight: 700; font-size: 1.3rem; line-height: 1.2; min-width: 0; overflow-wrap: anywhere; }
+.pm::before { content: ""; position: absolute; inset-inline-end: -28px; top: -34px; width: 118px; height: 118px; border-radius: 50%; background: rgba(255,255,255,.15); pointer-events: none; }
+.pm:hover { transform: translateY(-3px); }
+.pm:active { transform: scale(.97); }
+.pm[aria-pressed="true"] { transform: translateY(-3px) scale(1.03); box-shadow: 0 0 0 3px var(--bg), 0 0 0 5px var(--c), 0 22px 30px -14px var(--c); }
+.pay-grid.sel .pm[aria-pressed="false"] { opacity: .55; filter: saturate(.55); }
+.pm .lg { flex: none; width: 52px; height: 52px; display: block; animation: emfloat 3.4s ease-in-out infinite alternate; }
+.pm:nth-child(2) .lg { animation-delay: -.8s; } .pm:nth-child(3) .lg { animation-delay: -1.6s; } .pm:nth-child(4) .lg { animation-delay: -2.4s; }
+@keyframes emfloat { from { transform: translateY(-2px) rotate(-3deg); } to { transform: translateY(3px) rotate(3deg); } }
+.pm .lg svg, .pd-em svg { width: 100%; height: 100%; display: block; overflow: visible; }
+.pm .e1, .pd-em .e1 { fill: var(--ic); }
+.pm .e2, .pd-em .e2 { fill: var(--ic); opacity: .45; }
+.pm .cut, .pd-em .cut { fill: var(--c); }
+.pm .st, .pd-em .st { fill: none; stroke: var(--ic); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.pm .nm { font-family: var(--f-display); font-weight: 700; font-size: 1.5rem; line-height: 1.1; min-width: 0; overflow-wrap: anywhere; color: var(--ic); }
+.pm .ck { position: absolute; top: 10px; inset-inline-start: 10px; width: 24px; height: 24px; border-radius: 50%; background: var(--ic); display: grid; place-items: center; transform: scale(0); transition: transform .35s cubic-bezier(.2,.9,.3,1.5); }
+.pm .ck svg { width: 14px; height: 14px; fill: none; stroke: var(--c); stroke-width: 3.4; stroke-linecap: round; stroke-linejoin: round; }
+.pm[aria-pressed="true"] .ck { transform: scale(1); }
 .pay-d {
   --c: var(--gold); display: grid; gap: 10px; text-align: start; padding: 14px 16px; border-radius: 18px;
   border: 1px solid #6d5320; border-inline-start: 4px solid var(--c);
@@ -305,9 +313,6 @@ footer h2 { font-family: var(--f-display); font-size: 1.4rem; margin: 0; }
 @keyframes lswim{0%{transform:translateX(-6px) scaleX(1)}49%{transform:translateX(116px) scaleX(1)}50%{transform:translateX(116px) scaleX(-1)}99%{transform:translateX(-6px) scaleX(-1)}100%{transform:translateX(-6px) scaleX(1)}}
 .lfish svg{display:block;width:100%;height:auto}
 .pt .bub{opacity:.7;animation-name:rise-b}
-.lmelon{position:absolute;right:-46px;bottom:-12px;width:92px;animation:rock 1.3s ease-in-out infinite alternate;filter:drop-shadow(0 8px 10px rgba(0,0,0,.5))}
-.lmelon svg{display:block;width:100%;height:auto}
-@keyframes rock{from{transform:rotate(-9deg) translateY(0)}to{transform:rotate(9deg) translateY(-6px)}}
 .lname{margin:0;font-family:var(--f-display);font-weight:700;font-size:clamp(3rem,16vw,5rem);line-height:1.1;background:linear-gradient(100deg,#b9822a 0%,#e0af55 35%,#fff4d2 50%,#e0af55 65%,#b9822a 100%) 0 0/250% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:shimmer 2.4s linear infinite,rise .9s .2s both}
 .lbar{width:190px;height:3px;border-radius:3px;background:rgba(255,255,255,.12);overflow:hidden}
 .lbar::after{content:"";display:block;height:100%;width:100%;background:linear-gradient(90deg,#e0af55,#fff4d2);transform-origin:left;animation:lbar 2.4s cubic-bezier(.3,.6,.3,1) forwards}
@@ -344,10 +349,110 @@ footer h2 { font-family: var(--f-display); font-size: 1.4rem; margin: 0; }
   .track { flex-wrap: wrap; width: auto; justify-content: center; }
   .track .set + .set { display: none; }
 }
+
+[hidden] { display: none !important; }
+.pay-d { border: 1px solid color-mix(in srgb, var(--c) 60%, #000); border-inline-start: 4px solid var(--c); background: linear-gradient(135deg, color-mix(in srgb, var(--c) 24%, transparent), transparent 70%), var(--surface); animation: pdin .55s cubic-bezier(.2,.9,.3,1.15) both; transform-origin: 50% 0; }
+@keyframes pdin { from { opacity: 0; transform: translateY(-14px) scaleY(.85); } to { opacity: 1; transform: none; } }
+.pay-d .hd { display: flex; align-items: center; gap: 10px; }
+.pd-em { width: 38px; height: 38px; flex: none; border-radius: 12px; padding: 5px; background: var(--c); box-shadow: 0 8px 16px -8px var(--c); }
+.pay-d .num { font-size: 1.6rem; color: var(--ink); }
+.pay-d .copy { border-color: var(--c); color: var(--ink); background: color-mix(in srgb, var(--c) 35%, transparent); }
+.pay-d .copy:hover { background: color-mix(in srgb, var(--c) 55%, transparent); }
+.pay-d .copy.ok { background: var(--c); color: var(--ic); }
+
+/* ===== polish layer: extra motion + finish (additive, honours reduced motion) ===== */
+::selection { background: rgba(224,175,85,.35); color: #fff; }
+
+/* scroll progress + back to top */
+.pgbar { position: fixed; top: 0; inset-inline: 0; height: 3px; z-index: 90; transform-origin: 0 50%; transform: scaleX(0); background: linear-gradient(90deg, var(--ember), var(--gold), #fff4d2); box-shadow: 0 0 12px rgba(224,175,85,.7); pointer-events: none; }
+html[dir="rtl"] .pgbar { transform-origin: 100% 50%; }
+.totop { position: fixed; inset-block-end: calc(18px + env(safe-area-inset-bottom, 0px)); inset-inline-end: 18px; z-index: 30; width: 52px; height: 52px; border-radius: 50%; border: 0; padding: 0; display: grid; place-items: center; background: rgba(27,18,16,.94); box-shadow: 0 12px 28px -8px rgba(0,0,0,.75); opacity: 0; transform: translateY(18px) scale(.8); pointer-events: none; transition: opacity .35s ease, transform .45s cubic-bezier(.2,.9,.3,1.3); }
+.totop.show { opacity: 1; transform: none; pointer-events: auto; }
+.totop:hover { transform: translateY(-3px) scale(1.06); }
+.totop .ring { position: absolute; inset: 0; width: 100%; height: 100%; transform: rotate(-90deg); }
+.totop .ring circle { fill: none; stroke: var(--line); stroke-width: 2.5; }
+.totop .ring .prg { stroke: var(--gold); stroke-linecap: round; stroke-dasharray: 125.66; stroke-dashoffset: var(--p, 125.66); }
+.totop .ar { width: 22px; height: 22px; stroke: var(--gold); fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+
+/* loader: orbiting gold ring */
+.ptw::before { content: ""; position: absolute; inset: -20px; border-radius: 50%; border: 2px dashed rgba(224,175,85,.5); animation: ringspin 16s linear infinite reverse; }
+.ptw::after { content: ""; position: absolute; inset: -20px; border-radius: 50%; background: radial-gradient(circle, #fff4d2 0 3px, rgba(224,175,85,.55) 4px, transparent 7px) 50% 0 / 14px 14px no-repeat; animation: ringspin 2.6s linear infinite; }
+@keyframes ringspin { to { transform: rotate(360deg); } }
+
+/* hero: gold glint on the title, sparkles, pointer parallax */
+.hero-in.enter > h1 {
+  background: linear-gradient(100deg, #f3eadf 0%, #f3eadf 40%, #ffe3a0 50%, #f3eadf 60%, #f3eadf 100%) 0 0 / 260% 100%;
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; text-shadow: none;
+  filter: drop-shadow(0 6px 22px rgba(0,0,0,.55)); padding-bottom: .24em; margin-bottom: -.24em;
+  animation: rise .9s cubic-bezier(.2,.7,.2,1) both, glint 7s linear 1.4s infinite;
+}
+@keyframes glint { 0% { background-position: 130% 0; } 45%, 100% { background-position: -130% 0; } }
+.hero-in { transition: transform .35s ease-out; transform: translate3d(calc(var(--mx, 0) * 10px), calc(var(--my, 0) * 8px), 0); }
+.rays { transition: transform .5s ease-out; transform: translate3d(calc(var(--mx, 0) * -18px), 0, 0); }
+.sparks { position: absolute; inset: 0; z-index: 1; pointer-events: none; overflow: hidden; }
+.sparks i { position: absolute; width: var(--s); height: var(--s); border-radius: 50%; background: radial-gradient(circle, #fff4d2, rgba(224,175,85,.6) 45%, transparent 70%); opacity: 0; animation: spk var(--d) ease-in-out var(--dl) infinite; }
+@keyframes spk { 0% { opacity: 0; transform: translate3d(0,0,0) scale(.4); } 25% { opacity: .95; } 60% { opacity: .5; } 100% { opacity: 0; transform: translate3d(14px,-150px,0) scale(1.2); } }
+.cta { position: relative; overflow: hidden; }
+.cta::after { content: ""; position: absolute; top: 0; bottom: 0; width: 38%; left: -60%; background: linear-gradient(100deg, transparent, rgba(255,255,255,.38), transparent); transform: skewX(-20deg); animation: sweep 4.4s ease-in-out 1.6s infinite; pointer-events: none; }
+@keyframes sweep { 0%, 55% { left: -60%; } 100% { left: 135%; } }
+
+/* chips */
+.chip { position: relative; overflow: hidden; }
+.chip[aria-pressed="true"] { box-shadow: 0 10px 24px -10px rgba(194,47,35,.95); }
+.chip[aria-pressed="true"] .ci { animation: wob .8s cubic-bezier(.2,.9,.3,1.3); }
+@keyframes wob { 0% { transform: rotate(-16deg) scale(.8); } 55% { transform: rotate(10deg) scale(1.18); } 100% { transform: none; } }
+
+/* category banner: plate spins in, gold rule draws under the title */
+.cat-plate { animation: plin .95s cubic-bezier(.2,.9,.3,1.15) backwards, bob 5s ease-in-out .95s infinite alternate; }
+@keyframes plin { from { transform: rotate(-120deg) scale(.4); opacity: 0; } to { transform: none; opacity: 1; } }
+.cat-head h2::after { content: ""; display: block; height: 2px; width: 0; margin-top: 6px; border-radius: 2px; background: linear-gradient(90deg, var(--gold), transparent); animation: uline 1.1s cubic-bezier(.2,.7,.2,1) .35s forwards; }
+html[dir="rtl"] .cat-head h2::after { background: linear-gradient(270deg, var(--gold), transparent); }
+@keyframes uline { to { width: 120px; } }
+
+/* rows: scroll reveal, gold sweep line, price glow, tap ripple */
+.row { position: relative; overflow: hidden; }
+.row::after { content: ""; position: absolute; inset-inline: 0; bottom: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); transform: scaleX(0); transition: transform .55s cubic-bezier(.2,.7,.2,1); pointer-events: none; }
+.row:hover::after { transform: scaleX(1); }
+.row .price { transition: text-shadow .3s, transform .3s; }
+.row:hover .price { text-shadow: 0 0 16px rgba(224,175,85,.6); transform: scale(1.06); }
+.row.rv { animation: none; opacity: 0; transform: translateY(24px); }
+.row.rv.in { opacity: 1; transform: none; transition: opacity .6s ease, transform .75s cubic-bezier(.2,.7,.2,1), background .25s ease; }
+.cat-head.rv { opacity: 0; transform: translateY(26px) scale(.97); }
+.cat-head.rv.in { opacity: 1; transform: none; transition: opacity .6s ease, transform .8s cubic-bezier(.2,.7,.2,1); }
+.rip { position: absolute; border-radius: 50%; background: radial-gradient(circle, rgba(224,175,85,.45), rgba(224,175,85,0) 70%); transform: scale(0); opacity: .9; animation: rip .65s ease-out forwards; pointer-events: none; }
+@keyframes rip { to { transform: scale(1); opacity: 0; } }
+.pm, .copy, .cta { position: relative; }
+.pm, .copy { overflow: hidden; }
+
+/* item sheet: staged entrance, spinning plate, gold price */
+.scrim.on .plate-big { animation: plin .85s cubic-bezier(.2,.9,.3,1.15) backwards, bob 5s ease-in-out .85s infinite alternate; }
+.scrim.on .sheet-body > * { animation: rise .55s cubic-bezier(.2,.7,.2,1) backwards; }
+.scrim.on .sheet-body > *:nth-child(1) { animation-delay: .15s; }
+.scrim.on .sheet-body > *:nth-child(2) { animation-delay: .22s; }
+.scrim.on .sheet-body > *:nth-child(3) { animation-delay: .29s; }
+.scrim.on .sheet-body > *:nth-child(4) { animation-delay: .36s; }
+.sheet .big { background: linear-gradient(100deg, #c98f2f 0%, #e0af55 35%, #fff4d2 50%, #e0af55 65%, #c98f2f 100%) 0 0 / 250% 100%; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; animation: shimmer 3.2s linear infinite; }
+.scrim.on .sheet-body > .big { animation: rise .55s cubic-bezier(.2,.7,.2,1) .29s backwards, shimmer 3.2s linear .9s infinite; }
+.sheet .big small { -webkit-text-fill-color: var(--muted); }
+
+/* footer: phone pulse, payment tiles pop in, copy confirmation */
+.phone { position: relative; }
+.phone::after { content: ""; position: absolute; inset: 0; border-radius: 999px; border: 1px solid #8fe0ae; opacity: 0; animation: ringp 2.8s ease-out infinite; pointer-events: none; }
+@keyframes ringp { 0% { transform: scale(1); opacity: .65; } 100% { transform: scale(1.14, 1.5); opacity: 0; } }
+.phone svg { animation: shake 3.4s ease-in-out infinite; transform-origin: 50% 50%; }
+@keyframes shake { 0%, 70%, 100% { transform: rotate(0); } 74% { transform: rotate(-16deg); } 78% { transform: rotate(14deg); } 82% { transform: rotate(-10deg); } 86% { transform: rotate(8deg); } 90% { transform: rotate(0); } }
+.pm { animation: pmin .7s cubic-bezier(.2,.9,.3,1.2) backwards; }
+.pm:nth-child(2) { animation-delay: .08s; } .pm:nth-child(3) { animation-delay: .16s; } .pm:nth-child(4) { animation-delay: .24s; }
+@keyframes pmin { from { opacity: 0; transform: translateY(22px) scale(.88); } to { opacity: 1; transform: none; } }
+.pm::after { content: ""; position: absolute; inset: 0; background: linear-gradient(105deg, transparent 35%, rgba(255,255,255,.14) 50%, transparent 65%); transform: translateX(-130%); transition: transform .8s ease; pointer-events: none; }
+.pm:hover::after { transform: translateX(130%); }
+.pay-d .copy.ok { animation: okpop .5s cubic-bezier(.2,.9,.3,1.4); }
+.pay-d .copy.ok::before { content: "\2713\00a0"; }
+@keyframes okpop { 0% { transform: scale(.85); } 60% { transform: scale(1.12); } 100% { transform: scale(1); } }
 </style>
 
 <div class="loader" id="loader" aria-hidden="true">
-  <div class="ptw"><div class="pt"><div class="water"><svg class="lw" viewBox="0 0 400 18" preserveAspectRatio="none"><path d="M0 9Q25 0 50 9T100 9T150 9T200 9T250 9T300 9T350 9T400 9V18H0Z"/></svg></div><div class="lfish" id="lfish"></div></div><div class="lmelon" id="lmelon"></div></div>
+  <div class="ptw"><div class="pt"><div class="water"><svg class="lw" viewBox="0 0 400 18" preserveAspectRatio="none"><path d="M0 9Q25 0 50 9T100 9T150 9T200 9T250 9T300 9T350 9T400 9V18H0Z"/></svg></div><div class="lfish" id="lfish"></div></div></div>
   <h2 class="lname" id="lname"></h2>
   <div class="lbar"></div>
 </div>
@@ -361,7 +466,6 @@ footer h2 { font-family: var(--f-display); font-size: 1.4rem; margin: 0; }
       <div class="rays"><div class="ray"></div><div class="ray"></div><div class="ray"></div></div>
       <svg class="surface" viewBox="0 0 800 30" preserveAspectRatio="none"><path d="M0 14 Q50 2 100 14 T200 14 T300 14 T400 14 T500 14 T600 14 T700 14 T800 14"/></svg>
       <div class="floor"></div>
-      <div class="melon" id="melon"></div>
     </div>
     <div class="hero-in enter">
       <div class="kicker" id="kicker"></div>
@@ -421,7 +525,7 @@ const MENU = {
     subtitle: { ar: "للأسماك والمشويات", en: "Fish & Grills" },
     currency: "",
     phones: ["+249912331459"],
-    payments: [   // EXAMPLE numbers and holder names below are samples only: replace every number/holder with the real details. The four payment methods. Fill in each value (number + holder name); leave a value as "" or keep PLACEHOLDER_* to show "coming soon" with no copy button.
+    payments: [   // the four payment methods: edit number / holder here; leave a value empty to show "coming soon" with no copy button
       { id: "bankak", name: "بنكك",  color: "#b8312f", ink: "#fff",    number: "2230454", holder: "جمال الدين عثمان جمال الدين" },
       { id: "ocash",  name: "أوكاش", color: "#7a4bb3", ink: "#fff",    number: "2230454",  holder: "جمال الدين عثمان جمال الدين" },
       { id: "fawry",  name: "فوري",  color: "#f2b705", ink: "#1a1210", number: "1020210117",  holder: "جمال الدين عثمان جمال الدين" },
@@ -430,75 +534,82 @@ const MENU = {
   },
   categories: [
     { id: "meat", art: "skewer", name: { ar: "قسم اللحوم", en: "Meats" }, items: [
-      { id: "meat-01", name: { ar: "كيلو شية ضان", en: "Grilled Lamb (1 kg)" }, price: 100000 },
-      { id: "meat-02", name: { ar: "نص كيلو شية ضان", en: "Grilled Lamb (½ kg)" }, price: 50000 },
-      { id: "meat-03", name: { ar: "كيلو ابل", en: "Camel Meat (1 kg)" }, price: 90000 },
-      { id: "meat-04", name: { ar: "نص كيلو ابل", en: "Camel Meat (½ kg)" }, price: 45000 },
-      { id: "meat-05", name: { ar: "ابل ني", en: "Raw Camel Meat" }, price: 80000 },
-      { id: "meat-06", name: { ar: "ضان ني", en: "Raw Lamb" }, price: 90000 },
-      { id: "meat-07", name: { ar: "كيلو حلة ضان", en: "Lamb Stew Pot (1 kg)" }, price: 120000 },
-      { id: "meat-08", name: { ar: "كيلو ضان صاج", en: "Lamb Sajj (1 kg)" }, price: 120000 },
-      { id: "meat-09", name: { ar: "قطعة كبدة ضان", en: "Lamb Liver (piece)" }, price: 50000 },
-      { id: "meat-10", name: { ar: "كيلو كبدة ابل", en: "Camel Liver (1 kg)" }, price: 100000 }
+      { id: "meat-01", name: { ar: "كيلو شية ضان", en: "Grilled Lamb (1 kg)" }, price: 100000, art: "lamb1" },
+      { id: "meat-02", name: { ar: "نص كيلو شية ضان", en: "Grilled Lamb (½ kg)" }, price: 50000, art: "lamb2" },
+      { id: "meat-03", name: { ar: "كيلو ابل", en: "Camel Meat (1 kg)" }, price: 90000, art: "camel1" },
+      { id: "meat-04", name: { ar: "نص كيلو ابل", en: "Camel Meat (½ kg)" }, price: 45000, art: "camel2" },
+      { id: "meat-05", name: { ar: "ابل ني", en: "Raw Camel Meat" }, price: 80000, art: "rawcamel" },
+      { id: "meat-06", name: { ar: "ضان ني", en: "Raw Lamb" }, price: 90000, art: "rawlamb" },
+      { id: "meat-07", name: { ar: "كيلو حلة ضان", en: "Lamb Stew Pot (1 kg)" }, price: 120000, art: "stewpot" },
+      { id: "meat-08", name: { ar: "كيلو ضان صاج", en: "Lamb Sajj (1 kg)" }, price: 120000, art: "sajj" },
+      { id: "meat-09", name: { ar: "قطعة كبدة ضان", en: "Lamb Liver (piece)" }, price: 50000, art: "liver1" },
+      { id: "meat-10", name: { ar: "كيلو كبدة ابل", en: "Camel Liver (1 kg)" }, price: 100000, art: "liver2" }
     ]},
     { id: "grill", art: "mandi", name: { ar: "قسم المشويات", en: "Grills" }, items: [
-      { id: "grill-01", name: { ar: "خروف مندي كامل", en: "Whole Lamb Mandi" }, price: 900000 },
-      { id: "grill-02", name: { ar: "نص خروف مندي", en: "Half Lamb Mandi" }, price: 450000 },
+      { id: "grill-01", name: { ar: "خروف مندي كامل", en: "Whole Lamb Mandi" }, price: 900000, art: "lambwhole" },
+      { id: "grill-02", name: { ar: "نص خروف مندي", en: "Half Lamb Mandi" }, price: 450000, art: "lambhalf" },
       { id: "grill-03", name: { ar: "سمك مشوي", en: "Grilled Fish" }, price: 80000, art: "fish" },
       { id: "grill-04", name: { ar: "مندي لحمة", en: "Meat Mandi" }, price: 90000 },
-      { id: "grill-05", name: { ar: "مندي فراخ", en: "Chicken Mandi (whole)" }, price: 80000, art: "broast" },
-      { id: "grill-06", name: { ar: "مندي فراخ نص", en: "Chicken Mandi (half)" }, price: 40000, art: "broast" },
-      { id: "grill-07", name: { ar: "مندي فراخ ربع", en: "Chicken Mandi (quarter)" }, price: 23000, art: "broast" },
-      { id: "grill-08", name: { ar: "فرخة كاملة مشوي", en: "Whole Grilled Chicken" }, price: 80000, art: "broast" },
-      { id: "grill-09", name: { ar: "فرخة نص مشوي", en: "Half Grilled Chicken" }, price: 40000, art: "broast" },
+      { id: "grill-05", name: { ar: "مندي فراخ", en: "Chicken Mandi (whole)" }, price: 80000, art: "chickmandi1" },
+      { id: "grill-06", name: { ar: "مندي فراخ نص", en: "Chicken Mandi (half)" }, price: 40000, art: "chickmandi2" },
+      { id: "grill-07", name: { ar: "مندي فراخ ربع", en: "Chicken Mandi (quarter)" }, price: 23000, art: "chickmandi3" },
+      { id: "grill-08", name: { ar: "فرخة كاملة مشوي", en: "Whole Grilled Chicken" }, price: 80000, art: "chickgrill1" },
+      { id: "grill-09", name: { ar: "فرخة نص مشوي", en: "Half Grilled Chicken" }, price: 40000, art: "chickgrill2" },
       { id: "grill-10", name: { ar: "زبادي", en: "Yogurt" }, price: 5000, art: "yogurt" },
-      { id: "grill-11", name: { ar: "جردل زبادي", en: "Yogurt Bucket" }, price: 8000, art: "yogurt" },
+      { id: "grill-11", name: { ar: "جردل زبادي", en: "Yogurt Bucket" }, price: 8000, art: "yogbucket" },
       { id: "grill-12", name: { ar: "أقاشي لحم", en: "Meat Skewers" }, price: 15000, art: "skewer" },
-      { id: "grill-13", name: { ar: "أقاشي فراخ", en: "Chicken Skewers" }, price: 15000, art: "skewer" }
+      { id: "grill-13", name: { ar: "أقاشي فراخ", en: "Chicken Skewers" }, price: 15000, art: "chickskewer" }
     ]},
     { id: "salad", art: "salad", name: { ar: "قسم السلطات", en: "Salads" }, items: [
-      { id: "salad-01", name: { ar: "سلطة بالدكوة", en: "Dakwa Salad (peanut dressing)" }, price: 12000 },
+      { id: "salad-01", name: { ar: "سلطة بالدكوة", en: "Dakwa Salad (peanut dressing)" }, price: 12000, art: "saladdakwa" },
       { id: "salad-02", name: { ar: "سلطة خضراء", en: "Green Salad" }, price: 12000 },
-      { id: "salad-03", name: { ar: "سلطة طحينة", en: "Tahini Salad" }, price: 12000 },
-      { id: "salad-04", name: { ar: "بصل بالدكوة", en: "Onions with Dakwa" }, price: 7000 },
-      { id: "salad-05", name: { ar: "صحن مخلل", en: "Pickles Plate" }, price: 7000 }
+      { id: "salad-03", name: { ar: "سلطة طحينة", en: "Tahini Salad" }, price: 12000, art: "saladtahini" },
+      { id: "salad-04", name: { ar: "بصل بالدكوة", en: "Onions with Dakwa" }, price: 7000, art: "onions" },
+      { id: "salad-05", name: { ar: "صحن مخلل", en: "Pickles Plate" }, price: 7000, art: "pickles" }
     ]},
     { id: "juice", art: "juice", name: { ar: "قسم العصائر", en: "Juices" }, items: [
-      { id: "juice-01", name: { ar: "أناناس بالحليب", en: "Pineapple with Milk" }, price: 15000 },
-      { id: "juice-02", name: { ar: "مانجو بالحليب", en: "Mango with Milk" }, price: 15000 },
-      { id: "juice-03", name: { ar: "تبلدي", en: "Tabaldi (Baobab)" }, price: 12000 },
-      { id: "juice-04", name: { ar: "ليمون بالنعناع", en: "Lemon & Mint" }, price: 8000 },
-      { id: "juice-05", name: { ar: "شربوت", en: "Sharbot" }, price: 8000 },
-      { id: "juice-06", name: { ar: "فراولة بالحليب", en: "Strawberry with Milk" }, price: 15000 },
-      { id: "juice-07", name: { ar: "برتقال", en: "Orange" }, price: 12000 },
-      { id: "juice-08", name: { ar: "مشكل", en: "Mixed Fruit" }, price: 18000 },
-      { id: "juice-09", name: { ar: "جوافة", en: "Guava" }, price: 15000 },
-      { id: "juice-10", name: { ar: "كينزا", en: "Kinza" }, price: 4000 },
-      { id: "juice-11", name: { ar: "غباشة", en: "Ghubasha" }, price: 5000 },
+      { id: "juice-01", name: { ar: "أناناس بالحليب", en: "Pineapple with Milk" }, price: 15000, art: "pine" },
+      { id: "juice-02", name: { ar: "مانجو بالحليب", en: "Mango with Milk" }, price: 15000, art: "mango" },
+      { id: "juice-03", name: { ar: "تبلدي", en: "Tabaldi (Baobab)" }, price: 12000, art: "tabaldi" },
+      { id: "juice-04", name: { ar: "ليمون بالنعناع", en: "Lemon & Mint" }, price: 7000, art: "lemonmint" },
+      { id: "juice-05", name: { ar: "شربوت", en: "Sharbot" }, price: 7000, art: "sharbot" },
+      { id: "juice-06", name: { ar: "فراولة بالحليب", en: "Strawberry with Milk" }, price: 15000, art: "strawb" },
+      { id: "juice-07", name: { ar: "برتقال", en: "Orange" }, price: 15000, art: "orangej" },
+      { id: "juice-08", name: { ar: "مشكل", en: "Mixed Fruit" }, price: 18000, art: "mixedj" },
+      { id: "juice-09", name: { ar: "جوافة", en: "Guava" }, price: 15000, art: "guavaj" },
+      { id: "juice-10", name: { ar: "كينزا", en: "Kinza" }, price: 4000, art: "soda" },
+      { id: "juice-11", name: { ar: "غباشة", en: "Ghubasha" }, price: 5000, art: "ghubasha" },
       { id: "juice-12", name: { ar: "بطيخة كاملة", en: "Whole Watermelon" }, price: 50000, art: "melon" }
     ]},
     { id: "fish", art: "fish", name: { ar: "قسم الأسماك", en: "Fish" }, items: [
-      { id: "fish-01", name: { ar: "كيلو عجل فرايد", en: "Fried Ajal Fish (1 kg)" }, price: 100000 },
-      { id: "fish-02", name: { ar: "نص كيلو عجل فرايد", en: "Fried Ajal Fish (½ kg)" }, price: 50000 },
-      { id: "fish-03", name: { ar: "كيلو سمك بلطي", en: "Tilapia (1 kg)" }, price: 75000 },
-      { id: "fish-04", name: { ar: "فتة سمك", en: "Fish Fatta" }, price: 6000, art: "soup" },
-      { id: "fish-05", name: { ar: "شوربة سمك", en: "Fish Soup" }, price: 6000, art: "soup" },
-      { id: "fish-06", name: { ar: "جردل شوربة كبير", en: "Fish Soup Bucket (large)" }, price: 10000, art: "soup" }
+      { id: "fish-01", name: { ar: "كيلو عجل فرايد", en: "Fried Ajal Fish (1 kg)" }, price: 100000, art: "friedfish1" },
+      { id: "fish-02", name: { ar: "نص كيلو عجل فرايد", en: "Fried Ajal Fish (½ kg)" }, price: 50000, art: "friedfish2" },
+      { id: "fish-03", name: { ar: "كيلو سمك بلطي", en: "Tilapia (1 kg)" }, price: 75000, art: "tilapia" },
+      { id: "fish-04", name: { ar: "فتة سمك", en: "Fish Fatta" }, price: 6000, art: "fishfatta" },
+      { id: "fish-05", name: { ar: "شوربة سمك", en: "Fish Soup" }, price: 6000, art: "fishsoup" },
+      { id: "fish-06", name: { ar: "جردل شوربة كبير", en: "Fish Soup Bucket (large)" }, price: 10000, art: "fishbucket" }
     ]},
     { id: "broast", art: "broast", name: { ar: "قسم البروست", en: "Broast" }, items: [
       { id: "broast-01", name: { ar: "بروست كامل", en: "Whole Broast" }, price: 80000 },
-      { id: "broast-02", name: { ar: "بروست نص", en: "Half Broast" }, price: 40000 }
+      { id: "broast-02", name: { ar: "بروست نص", en: "Half Broast" }, price: 40000, art: "broasthalf" }
     ]},
     { id: "soup", art: "soup", name: { ar: "قسم الشوربة", en: "Soup" }, items: [
-      { id: "soup-01", name: { ar: "شوربة ضان", en: "Lamb Soup" }, price: 10000 },
-      { id: "soup-02", name: { ar: "جردل شوربة ضان", en: "Lamb Soup Bucket" }, price: 15000 },
-      { id: "soup-03", name: { ar: "فتة ضان", en: "Lamb Fatta" }, price: 10000 }
+      { id: "soup-01", name: { ar: "شوربة ضان", en: "Lamb Soup" }, price: 10000, art: "lambsoup" },
+      { id: "soup-02", name: { ar: "جردل شوربة ضان", en: "Lamb Soup Bucket" }, price: 15000, art: "lambbucket" },
+      { id: "soup-03", name: { ar: "فتة ضان", en: "Lamb Fatta" }, price: 10000, art: "lambfatta" }
     ]},
     { id: "dessert", art: "dessert", name: { ar: "قسم الحلويات", en: "Desserts" }, items: [
-      { id: "dessert-01", name: { ar: "صحن بطيخ", en: "Watermelon Plate" }, price: 25000, art: "melon" },
+      { id: "dessert-01", name: { ar: "صحن بطيخ", en: "Watermelon Plate" }, price: 25000, art: "melonplate" },
       { id: "dessert-02", name: { ar: "صحن فواكه", en: "Fruit Plate" }, price: 30000, art: "fruit" },
-      { id: "dessert-03", name: { ar: "سلطة فواكه", en: "Fruit Salad" }, price: 20000, art: "fruit" },
+      { id: "dessert-03", name: { ar: "سلطة فواكه", en: "Fruit Salad" }, price: 20000, art: "fruitsalad" },
       { id: "dessert-04", name: { ar: "كنافة", en: "Kunafa" }, price: 20000 }
+    ]},
+    { id: "hot", art: "tea", name: { ar: "المشروبات الساخنة", en: "Hot Drinks" }, items: [
+      { id: "hot-01", name: { ar: "كباية شاي", en: "Tea Cup" }, price: 2, art: "tea" },
+      { id: "hot-02", name: { ar: "سيرمس شاي", en: "Tea Thermos" }, price: 10, art: "thermos" },
+      { id: "hot-03", name: { ar: "كباية جبنة ", en: "Coffee cup" }, price: 3, art: "coffee" },
+      { id: "hot-04", name: { ar: " جبنة في جبنة", en: "Large Coffee" }, price: 15, art: "coffee" },
+      { id: "hot-05", name: { ar: "سيرمس جبنة", en: "Extra-Large Coffee" }, price: 25, art: "coffeexl" }
     ]}
   ]
 };
@@ -529,6 +640,94 @@ function melonCore() {
   });
   return s;
 }
+/* ---------------- extra illustration helpers (one distinct drawing per dish) ---------------- */
+const BOARD = '<circle cx="100" cy="107" r="92" fill="#000" opacity=".3"/><circle cx="100" cy="100" r="92" fill="#6e4524"/><circle cx="100" cy="100" r="86" fill="#9a6a3b"/><path d="M26 66q74-18 148 0M20 100q80-16 160 0M26 134q74-14 148 0" stroke="#7d5129" stroke-width="2.5" fill="none" opacity=".7"/>';
+const ellp = (cx, cy, rx, ry, f, o) => '<ellipse cx="' + cx + '" cy="' + cy + '" rx="' + rx + '" ry="' + ry + '" fill="' + f + '"' + (o ? ' opacity="' + o + '"' : '') + '/>';
+const circ = (cx, cy, r, f, o) => '<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" fill="' + f + '"' + (o ? ' opacity="' + o + '"' : '') + '/>';
+function chunk(x, y, w, h, rot, c1, c2, marks) {
+  let s = '<g transform="translate(' + x + ' ' + y + ') rotate(' + rot + ')"><rect x="' + (-w / 2) + '" y="' + (-h / 2) + '" width="' + w + '" height="' + h + '" rx="' + (h * .42) + '" fill="' + c1 + '"/>';
+  s += '<rect x="' + (-w / 2 + 3) + '" y="' + (-h / 2 + 2) + '" width="' + (w - 6) + '" height="' + (h * .38) + '" rx="' + (h * .2) + '" fill="' + c2 + '" opacity=".7"/>';
+  if (marks) s += '<path d="M' + (-w * .25) + ' ' + (-h * .3) + 'l' + (h * .3) + ' ' + (h * .6) + 'M0 ' + (-h * .3) + 'l' + (h * .3) + ' ' + (h * .6) + 'M' + (w * .25) + ' ' + (-h * .3) + 'l' + (h * .3) + ' ' + (h * .6) + '" stroke="#2a1208" stroke-width="2.2" stroke-linecap="round" opacity=".5"/>';
+  return s + '</g>';
+}
+function rice(cx, cy, rx, ry) {
+  let s = ellp(cx, cy, rx, ry, '#e5bd62') + ellp(cx - rx * .15, cy - ry * .12, rx * .65, ry * .55, '#f0cf7e');
+  for (let i = 0; i < 36; i++) { const r = ((i * 7) % 46) / 46, a = i * 2.399; s += circ((cx + r * rx * .9 * Math.cos(a)).toFixed(1), (cy + r * ry * .9 * Math.sin(a)).toFixed(1), 1.7, '#fff6d6', .8); }
+  return s;
+}
+const ONION = (x, y) => '<circle cx="' + x + '" cy="' + y + '" r="10" fill="none" stroke="#e6c9ee" stroke-width="3.5"/><circle cx="' + x + '" cy="' + y + '" r="5" fill="none" stroke="#c79ad6" stroke-width="2.5"/>';
+const CHILI = (x, y, r) => '<path d="M' + x + ' ' + y + 'q20 2 16 26" stroke="#d6402f" stroke-width="6" fill="none" stroke-linecap="round" transform="rotate(' + (r || 0) + ' ' + x + ' ' + y + ')"/><path d="M' + x + ' ' + y + 'l-4-5" stroke="#3f7a32" stroke-width="3" stroke-linecap="round" transform="rotate(' + (r || 0) + ' ' + x + ' ' + y + ')"/>';
+const PARSLEY = (x, y) => circ(x, y, 3.2, '#4f9a3a') + circ(x + 6, y + 3, 2.6, '#6fb352') + circ(x - 5, y + 4, 2.4, '#3f7a32');
+
+function lambgrill(many, c1, c2) {
+  const A = [[78, 70, 46, 27, -20], [126, 76, 46, 27, 18], [62, 110, 46, 27, 10], [106, 108, 50, 29, -8], [146, 114, 44, 27, 24], [84, 144, 46, 27, 14], [128, 146, 46, 27, -16], [100, 88, 40, 24, 4], [100, 128, 40, 24, -6]];
+  const B = [[84, 84, 48, 28, -14], [124, 96, 48, 28, 16], [92, 124, 48, 28, 6], [128, 132, 44, 26, -12]];
+  let s = BOARD;
+  (many ? A : B).forEach(p => { s += chunk(p[0], p[1], p[2], p[3], p[4], c1, c2, true); });
+  s += ONION(40, 56) + ONION(52, 68) + ONION(160, 150) + CHILI(150, 50, 0) + PARSLEY(40, 150) + PARSLEY(160, 60);
+  return s + STEAM;
+}
+function rawcut(c1, c2, bones) {
+  let s = PLATE + '<path d="M38 100Q40 54 98 50Q162 48 164 100Q166 152 100 154Q36 156 38 100Z" fill="' + c1 + '"/>';
+  s += '<path d="M60 76q22-14 48-6M54 104q36-16 74 0M70 130q30-12 56-2" stroke="' + c2 + '" stroke-width="5" fill="none" stroke-linecap="round" opacity=".75"/><ellipse cx="82" cy="72" rx="26" ry="9" fill="#fff" opacity=".18"/>';
+  if (bones) [[62, 120], [92, 126], [122, 124], [150, 116]].forEach(p => { s += '<rect x="' + (p[0] - 5) + '" y="' + (p[1] - 18) + '" width="10" height="34" rx="5" fill="#f4ead8" transform="rotate(-8 ' + p[0] + ' ' + p[1] + ')"/>'; });
+  else s += '<path d="M120 62q22 4 30 24" stroke="#f6e9c8" stroke-width="9" fill="none" stroke-linecap="round" opacity=".85"/>';
+  return s + PARSLEY(48, 150) + circ(158, 150, 8, '#d6402f') + circ(155, 147, 2.5, '#f58a7c');
+}
+function bucket(body, dark, content, steam) {
+  let s = PLATE + '<ellipse cx="100" cy="166" rx="48" ry="9" fill="#000" opacity=".18"/><path d="M50 80Q100 -4 150 80" stroke="#b7bec4" stroke-width="5" fill="none" stroke-linecap="round"/>';
+  s += '<path d="M50 80L62 154Q100 170 138 154L150 80Z" fill="' + body + '"/><path d="M52 98L55 112Q100 126 145 112L148 98Q100 112 52 98Z" fill="#fff" opacity=".85"/><path d="M62 154Q100 170 138 154L140 142Q100 158 60 142Z" fill="' + dark + '" opacity=".5"/><path d="M62 90l8 62" stroke="#fff" stroke-opacity=".35" stroke-width="5" stroke-linecap="round"/>';
+  s += '<ellipse cx="100" cy="80" rx="50" ry="14" fill="#e9edf0"/><ellipse cx="100" cy="81" rx="44" ry="10.5" fill="' + content + '"/><ellipse cx="88" cy="79" rx="18" ry="3.5" fill="#fff" opacity=".35"/>';
+  return s + (steam ? STEAM : '');
+}
+const GL = {
+  pine: '<path d="M-17 10Q0 -18 17 10Z" fill="#f6d14a" stroke="#fff3b0" stroke-width="2"/><path d="M-6 -8l-6-14M0 -12l0-16M6 -8l6-14" stroke="#4f9a3a" stroke-width="4" stroke-linecap="round"/>',
+  mango: '<path d="M-19 7Q0 -23 19 7Q0 -6 -19 7Z" fill="#f7a823"/><path d="M-12 4Q0 -10 12 4" stroke="#ffd37a" stroke-width="2" fill="none"/>',
+  lemon: '<circle r="16" fill="#f4e04d" stroke="#fff7b8" stroke-width="3"/><path d="M0-14v28M-14 0h28M-10-10l20 20M10-10l-20 20" stroke="#fff7b8" stroke-width="1.6" opacity=".8"/><ellipse cx="16" cy="-12" rx="9" ry="4.5" fill="#4f9a3a" transform="rotate(-35 16 -12)"/><ellipse cx="22" cy="-3" rx="8" ry="4" fill="#6fb352" transform="rotate(20 22 -3)"/>',
+  berry: '<path d="M0 15Q-19 0 -15 -10Q-7 -19 0 -11Q7 -19 15 -10Q19 0 0 15Z" fill="#e0364c"/><path d="M-6 -2l1 1M2 -5l1 1M6 2l1 1M-2 5l1 1M-9 -7l1 1" stroke="#ffd5a0" stroke-width="2" stroke-linecap="round"/><path d="M-8-12l8 4l8-4l-4-5l-4 2l-4-2z" fill="#4f9a3a"/>',
+  orange: '<circle r="17" fill="#f6a21e" stroke="#fff3d0" stroke-width="3"/><path d="M0-15v30M-15 0h30M-11-11l22 22M11-11l-22 22" stroke="#fff3d0" stroke-width="1.6" opacity=".8"/>',
+  guava: '<circle r="17" fill="#9bc65a"/><circle r="13" fill="#f59aa0"/><circle r="5" fill="#fde9d0"/><path d="M-3-1l1 1M3 2l1 1M0-4l1 1" stroke="#c8943c" stroke-width="2" stroke-linecap="round"/>',
+  baobab: '<ellipse rx="19" ry="10" fill="#8a6a3c" transform="rotate(-25)"/><ellipse rx="15" ry="6" fill="#b69660" transform="rotate(-25)"/><path d="M-12 6l4-3M-4 8l4-4M5 6l4-4" stroke="#6b4e26" stroke-width="2" stroke-linecap="round"/>',
+  mixed: '<circle cx="-8" cy="2" r="9" fill="#f6a21e" stroke="#fff3d0" stroke-width="2"/><circle cx="10" cy="-4" r="7" fill="#d4263a"/><path d="M10-11q4-8 9-8" stroke="#3f7a32" stroke-width="2" fill="none"/><path d="M-2 14q10-14 22-4q-8 10-22 4Z" fill="#7bc05a"/>',
+  none: ''
+};
+function glass(liq, hi, g, o) {
+  o = o || {};
+  let s = DARK + '<path d="M110 30L100 112" stroke="' + (o.straw || '#e0af55') + '" stroke-width="7" stroke-linecap="round"/><path d="M66 54h68l-8 98q-26 10-52 0Z" fill="#fff" opacity=".14"/>';
+  s += '<defs><clipPath id="gq"><path d="M69 80h62l-5 72q-26 10-52 0Z"/></clipPath></defs><g clip-path="url(#gq)">';
+  const cols = o.layers || [liq], h = 76 / cols.length;
+  cols.forEach((c, i) => { s += '<rect x="60" y="' + (80 + i * h) + '" width="80" height="' + (h + 2) + '" fill="' + c + '"/>'; });
+  s += '<rect x="60" y="80" width="80" height="12" fill="' + hi + '" opacity=".55"/>';
+  if (o.ice) s += '<rect x="76" y="94" width="18" height="18" rx="4" fill="#fff" opacity=".32" transform="rotate(12 85 103)"/><rect x="100" y="110" width="18" height="18" rx="4" fill="#fff" opacity=".28" transform="rotate(-14 109 119)"/><rect x="82" y="126" width="16" height="16" rx="4" fill="#fff" opacity=".26" transform="rotate(20 90 134)"/>';
+  if (o.fizz) s += circ(84, 120, 3, '#fff', .6) + circ(104, 104, 2.5, '#fff', .6) + circ(116, 134, 3.5, '#fff', .55) + circ(92, 142, 2.5, '#fff', .6) + circ(112, 96, 2, '#fff', .6);
+  s += '</g>';
+  if (o.foam) s += ellp(100, 80, 31, 5.5, o.foam) + circ(88, 78, 3, '#fff', .55) + circ(112, 79, 2.5, '#fff', .5);
+  s += '<path d="M66 54h68l-8 98q-26 10-52 0Z" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="3"/><path d="M78 66l4 74" stroke="#fff" stroke-opacity=".5" stroke-width="4" stroke-linecap="round"/>';
+  return s + '<g transform="translate(140 54)">' + (GL[g] || '') + '</g>';
+}
+function chicken(kind, rice_) {
+  let s = PLATE;
+  if (rice_) s += rice(100, 106, 66, 56);
+  const SKIN = '#c4701f', HI = '#eca24a';
+  const leg = (x, y, r) => '<g transform="translate(' + x + ' ' + y + ') rotate(' + r + ')"><ellipse cx="0" cy="0" rx="22" ry="14" fill="' + SKIN + '"/><ellipse cx="-4" cy="-4" rx="14" ry="6" fill="' + HI + '" opacity=".75"/><rect x="18" y="-4" width="26" height="8" rx="4" fill="#f3eadf"/><circle cx="46" cy="-5" r="5.5" fill="#f3eadf"/><circle cx="46" cy="5" r="5.5" fill="#f3eadf"/></g>';
+  if (kind === 'whole') {
+    s += ellp(100, 98, 46, 36, SKIN) + ellp(90, 86, 30, 16, HI, .75) + '<path d="M70 72q30-14 62 0" stroke="#8a4a14" stroke-width="3" fill="none" stroke-linecap="round"/>';
+    s += ellp(54, 92, 13, 20, '#b6631a') + ellp(146, 92, 13, 20, '#b6631a');
+    s += '<g transform="translate(78 138) rotate(-30)"><rect x="0" y="0" width="12" height="30" rx="6" fill="' + SKIN + '"/><circle cx="3" cy="32" r="5" fill="#f3eadf"/><circle cx="10" cy="32" r="5" fill="#f3eadf"/></g><g transform="translate(110 138) rotate(30)"><rect x="0" y="0" width="12" height="30" rx="6" fill="' + SKIN + '"/><circle cx="3" cy="32" r="5" fill="#f3eadf"/><circle cx="10" cy="32" r="5" fill="#f3eadf"/></g>';
+  } else if (kind === 'half') {
+    s += '<path d="M54 102Q54 56 104 56Q146 58 148 100Q146 134 100 138Q54 140 54 102Z" fill="' + SKIN + '"/><path d="M66 82Q92 60 128 74" stroke="' + HI + '" stroke-width="12" fill="none" stroke-linecap="round" opacity=".75"/><path d="M70 110q26 12 56-4" stroke="#8a4a14" stroke-width="3" fill="none" stroke-linecap="round"/>' + leg(112, 138, 12);
+  } else {
+    s += leg(86, 100, -18) + '<ellipse cx="108" cy="120" rx="26" ry="16" fill="' + SKIN + '" transform="rotate(10 108 120)"/><ellipse cx="102" cy="114" rx="16" ry="6" fill="' + HI + '" opacity=".75" transform="rotate(10 102 114)"/>';
+  }
+  if (!rice_) s += '<circle cx="154" cy="152" r="13" fill="#f4d34e"/><circle cx="154" cy="152" r="9" fill="#fff3b0"/><path d="M154 143v18M145 152h18" stroke="#f4d34e" stroke-width="1.8"/><circle cx="44" cy="150" r="10" fill="#d6402f"/><circle cx="41" cy="147" r="3" fill="#f58a7c"/>' + PARSLEY(160, 56);
+  else s += circ(150, 150, 10, '#d6402f') + circ(147, 147, 3, '#f58a7c') + '<circle cx="50" cy="150" r="4" fill="#4a2a52"/><circle cx="60" cy="158" r="3.5" fill="#4a2a52"/><path d="M56 60l8 6M142 56l-8 6" stroke="#f6e6b0" stroke-width="4" stroke-linecap="round"/>';
+  return s + STEAM;
+}
+function fishBody(x, y, sc, c1, c2, c3) {
+  return '<g transform="translate(' + x + ' ' + y + ') scale(' + sc + ')"><path d="M-66 0Q-20 -42 38 -14L72 -36L66 0L72 36L38 14Q-20 42 -66 0Z" fill="' + c1 + '"/><path d="M-66 0Q-20 -42 38 -14L66 0Q0 -10 -66 0Z" fill="' + c2 + '" opacity=".7"/><path d="M-40 -14l14 28M-20 -20l14 34M0 -22l14 32M20 -18l12 26" stroke="' + c3 + '" stroke-width="3" stroke-linecap="round" opacity=".7"/><circle cx="-50" cy="-3" r="4" fill="#2a1a10"/><circle cx="-49" cy="-4" r="1.4" fill="#fff"/></g>';
+}
+const LEMON = (x, y) => '<circle cx="' + x + '" cy="' + y + '" r="18" fill="#f4d34e"/><circle cx="' + x + '" cy="' + y + '" r="14" fill="#fff3b0"/><path d="M' + x + ' ' + (y - 14) + 'v28M' + (x - 14) + ' ' + y + 'h28M' + (x - 10) + ' ' + (y - 10) + 'l20 20M' + (x + 10) + ' ' + (y - 10) + 'l-20 20" stroke="#f4d34e" stroke-width="2"/>';
+const BREAD = (x, y, r) => '<rect x="' + x + '" y="' + y + '" width="20" height="16" rx="4" fill="#e1b36a" transform="rotate(' + r + ' ' + x + ' ' + y + ')"/><rect x="' + (x + 3) + '" y="' + (y + 2) + '" width="12" height="5" rx="2.5" fill="#f2d49a" transform="rotate(' + r + ' ' + x + ' ' + y + ')"/>';
 const ART = {
   skewer() {
     let s = PLATE;
@@ -587,6 +786,198 @@ const ART = {
   fruit() {
     return bowl('#fbf2e2', '#ffffff', '<circle cx="100" cy="100" r="64" fill="#f8ecd6"/><g><circle cx="80" cy="82" r="15" fill="#d4263a"/><circle cx="80" cy="70" r="5" fill="#4f9a3a"/><circle cx="124" cy="76" r="15" fill="#d4263a"/><circle cx="124" cy="64" r="5" fill="#4f9a3a"/><circle cx="108" cy="118" r="15" fill="#d4263a"/><circle cx="108" cy="106" r="5" fill="#4f9a3a"/><circle cx="76" cy="122" r="14" fill="#8bbd3a"/><circle cx="76" cy="122" r="6" fill="#dff0b6"/><circle cx="102" cy="92" r="14" fill="#f39a1f"/><path d="M102 78v28M88 92h28" stroke="#ffd08a" stroke-width="2"/><rect x="128" y="100" width="22" height="22" rx="5" fill="#e8453c" transform="rotate(14 139 111)"/><circle cx="138" cy="108" r="2" fill="#1a1210"/><circle cx="60" cy="98" r="6" fill="#2b3a8f"/><circle cx="140" cy="140" r="6" fill="#2b3a8f"/><circle cx="90" cy="144" r="6" fill="#2b3a8f"/></g>', false);
   },
+  tea() {
+    let s = DARK + '<circle cx="100" cy="100" r="64" fill="#efe3cf"/><circle cx="100" cy="100" r="58" fill="none" stroke="#d6c4a6" stroke-width="2"/>';
+    s += '<path d="M138 84q26-2 24 16q-2 16-24 14" fill="none" stroke="#fff7e8" stroke-width="9" stroke-linecap="round" transform="translate(-6 0)"/>';
+    s += '<circle cx="100" cy="100" r="46" fill="#fff7e8"/><circle cx="100" cy="100" r="40" fill="#b5541a"/><circle cx="100" cy="100" r="40" fill="none" stroke="#d98a3c" stroke-width="3" opacity=".7"/>';
+    s += '<ellipse cx="86" cy="86" rx="18" ry="8" fill="#f3b26a" opacity=".55"/><path d="M56 132l-16 18" stroke="#e0af55" stroke-width="4" stroke-linecap="round"/>';
+    return s + STEAM;
+  },
+  thermos() {
+    let s = DARK + '<path d="M128 112h14q14 0 14 16t-14 16h-14" fill="none" stroke="#c9d0d4" stroke-width="7" stroke-linecap="round"/>';
+    s += '<rect x="68" y="96" width="62" height="74" rx="14" fill="#8f1f17"/><rect x="68" y="124" width="62" height="7" fill="#e0af55"/><rect x="76" y="100" width="9" height="66" rx="4" fill="#fff" opacity=".22"/>';
+    s += '<rect x="64" y="76" width="70" height="26" rx="9" fill="#d7dde0"/><rect x="64" y="76" width="70" height="8" rx="4" fill="#fff" opacity=".55"/><rect x="92" y="62" width="14" height="16" rx="4" fill="#aab3b8"/>';
+    return s + '<g transform="translate(0 8)">' + STEAM + '</g>';
+  },
+  coffee() {
+    let s = DARK + '<circle cx="100" cy="100" r="64" fill="#efe3cf"/><circle cx="100" cy="100" r="58" fill="none" stroke="#d6c4a6" stroke-width="2"/>';
+    s += '<path d="M138 84q26-2 24 16q-2 16-24 14" fill="none" stroke="#fff7e8" stroke-width="9" stroke-linecap="round" transform="translate(-6 0)"/>';
+    s += '<circle cx="100" cy="100" r="46" fill="#fff7e8"/><circle cx="100" cy="100" r="40" fill="#2a140c"/><circle cx="100" cy="100" r="40" fill="none" stroke="#7a4a26" stroke-width="3"/>';
+    s += '<ellipse cx="88" cy="88" rx="17" ry="7" fill="#8a5a33" opacity=".55"/>';
+    s += '<g fill="#c9a24a"><circle cx="46" cy="148" r="4"/><circle cx="58" cy="156" r="3"/><circle cx="40" cy="136" r="3"/></g>';
+    return s + STEAM;
+  },
+  coffeexl() {
+    let s = DARK + '<path d="M134 96h12q16 0 16 20t-16 20h-12" fill="none" stroke="#f1e7d8" stroke-width="9" stroke-linecap="round"/>';
+    s += '<path d="M56 84h82l-6 76q-35 14-70 0Z" fill="#f1e7d8"/><path d="M58 100h78l-1 10H57Z" fill="#2a140c"/><path d="M56 84h82l-1.5 14h-79Z" fill="#2a140c"/><path d="M62 90l6 62" stroke="#fff" stroke-width="5" stroke-linecap="round" opacity=".6"/>';
+    s += '<text x="97" y="144" text-anchor="middle" font-family="Georgia,serif" font-size="30" font-weight="700" fill="#b9822a">XL</text>';
+    return s + '<g transform="translate(-3 6)">' + STEAM + '</g>';
+  },
+  /* --- meats --- */
+  lamb1() { return lambgrill(true, '#8f4a26', '#c27a45'); },
+  lamb2() { return lambgrill(false, '#8f4a26', '#c27a45'); },
+  camel1() { return lambgrill(true, '#6b2f1c', '#a35a3a'); },
+  camel2() { return lambgrill(false, '#6b2f1c', '#a35a3a'); },
+  rawcamel() { return rawcut('#a5262b', '#e9a0a0', false); },
+  rawlamb() { return rawcut('#c4474f', '#f2b8b8', true); },
+  stewpot() {
+    let s = '<circle cx="100" cy="107" r="92" fill="#000" opacity=".3"/><rect x="2" y="88" width="30" height="24" rx="8" fill="#4a4f54"/><rect x="168" y="88" width="30" height="24" rx="8" fill="#4a4f54"/><circle cx="100" cy="100" r="88" fill="#6a6f74"/><circle cx="100" cy="100" r="80" fill="#8b9096"/><circle cx="100" cy="100" r="70" fill="#7a3d1a"/><circle cx="100" cy="100" r="62" fill="#a4582a"/>';
+    [[78, 84], [118, 80], [96, 116], [126, 114], [70, 118]].forEach((p, i) => { s += chunk(p[0], p[1], 34, 22, i * 37 - 40, '#5b2a14', '#8f4a26', false); });
+    s += circ(100, 92, 9, '#f0c24b') + circ(136, 98, 9, '#f0c24b') + circ(60, 98, 8, '#f0c24b') + circ(108, 134, 8, '#d6402f') + circ(84, 134, 7, '#4f9a3a') + circ(142, 126, 6, '#4f9a3a') + circ(66, 78, 6, '#4f9a3a');
+    return s + '<path d="M30 70q24-26 56-30" stroke="#fff" stroke-opacity=".3" stroke-width="5" fill="none" stroke-linecap="round"/>' + STEAM;
+  },
+  sajj() {
+    let s = '<circle cx="100" cy="107" r="92" fill="#000" opacity=".3"/><rect x="0" y="92" width="30" height="16" rx="8" fill="#2f3236"/><rect x="170" y="92" width="30" height="16" rx="8" fill="#2f3236"/><circle cx="100" cy="100" r="88" fill="#3d4146"/><circle cx="100" cy="100" r="76" fill="#2a2d31"/><circle cx="100" cy="100" r="76" fill="none" stroke="#e0af55" stroke-opacity=".5" stroke-width="2"/>';
+    [[70, 76, -18], [112, 70, 14], [84, 104, 8], [128, 104, -12], [64, 130, 20], [108, 132, -8], [140, 130, 24]].forEach(p => { s += chunk(p[0], p[1], 36, 20, p[2], '#8f4a26', '#c27a45', true); });
+    s += '<circle cx="96" cy="90" r="9" fill="none" stroke="#6fb352" stroke-width="4"/><circle cx="120" cy="120" r="9" fill="none" stroke="#d6402f" stroke-width="4"/><circle cx="76" cy="116" r="8" fill="none" stroke="#e8c030" stroke-width="4"/>' + ONION(138, 80) + ONION(60, 98) + PARSLEY(100, 150) + PARSLEY(150, 112);
+    return s + STEAM;
+  },
+  liver1() {
+    let s = PLATE;
+    [[76, 84, -16], [124, 90, 14], [100, 124, 4]].forEach(p => { s += '<g transform="translate(' + p[0] + ' ' + p[1] + ') rotate(' + p[2] + ')"><path d="M-34 0Q-30 -22 0 -22Q32 -20 34 2Q30 22 0 22Q-34 22 -34 0Z" fill="#5a1f1a"/><path d="M-20 -8q16-8 34 0" stroke="#9c4a3c" stroke-width="4" fill="none" stroke-linecap="round" opacity=".8"/></g>'; });
+    return s + ONION(50, 120) + ONION(150, 130) + ONION(62, 56) + '<circle cx="146" cy="60" r="9" fill="none" stroke="#6fb352" stroke-width="4"/>' + PARSLEY(100, 160) + STEAM;
+  },
+  liver2() {
+    let s = PLATE;
+    [[66, 70, -20], [112, 66, 10], [150, 94, 24], [84, 108, 6], [124, 128, -12], [64, 140, 16]].forEach(p => { s += '<g transform="translate(' + p[0] + ' ' + p[1] + ') rotate(' + p[2] + ')"><path d="M-28 0Q-24 -18 0 -18Q26 -16 28 2Q24 18 0 18Q-28 18 -28 0Z" fill="#7a2a22"/><path d="M-16 -6q12-6 28 0" stroke="#b86a58" stroke-width="3.5" fill="none" stroke-linecap="round" opacity=".8"/></g>'; });
+    return s + LEMON(160, 148) + '<circle cx="46" cy="100" r="8" fill="none" stroke="#6fb352" stroke-width="4"/><circle cx="104" cy="152" r="8" fill="none" stroke="#d6402f" stroke-width="4"/>' + ONION(40, 60) + ONION(100, 96) + STEAM;
+  },
+  /* --- grills --- */
+  lambwhole() {
+    let s = PLATE + rice(100, 112, 78, 56);
+    s += '<g transform="translate(0 -4)"><rect x="36" y="94" width="14" height="40" rx="7" fill="#7d3a1a" transform="rotate(-18 43 94)"/><rect x="60" y="100" width="14" height="40" rx="7" fill="#7d3a1a" transform="rotate(8 67 100)"/><rect x="128" y="100" width="14" height="40" rx="7" fill="#7d3a1a" transform="rotate(-8 135 100)"/><rect x="150" y="94" width="14" height="40" rx="7" fill="#7d3a1a" transform="rotate(18 157 94)"/>';
+    s += '<ellipse cx="100" cy="92" rx="60" ry="32" fill="#9a4f22"/><ellipse cx="92" cy="80" rx="42" ry="14" fill="#cc7e3e" opacity=".8"/><path d="M52 94q48 22 96 0" stroke="#6b320f" stroke-width="3" fill="none" stroke-linecap="round" opacity=".7"/><path d="M70 74q30-12 60 0" stroke="#6b320f" stroke-width="3" fill="none" stroke-linecap="round" opacity=".6"/></g>';
+    s += '<ellipse cx="44" cy="82" rx="16" ry="14" fill="#8a431b"/><ellipse cx="30" cy="68" rx="7" ry="11" fill="#7d3a1a" transform="rotate(-30 30 68)"/><circle cx="40" cy="78" r="2.6" fill="#1a0e08"/>';
+    s += '<circle cx="60" cy="146" r="4" fill="#4a2a52"/><circle cx="82" cy="154" r="3.6" fill="#4a2a52"/><circle cx="126" cy="152" r="4" fill="#d6402f"/><path d="M150 150l8 6M118 60l6 8" stroke="#f6e6b0" stroke-width="4" stroke-linecap="round"/>';
+    return s + STEAM;
+  },
+  lambhalf() {
+    let s = PLATE + rice(100, 112, 74, 54);
+    s += '<path d="M36 106Q40 62 100 58Q160 60 164 104Q150 128 100 128Q50 128 36 106Z" fill="#9a4f22"/><path d="M50 98Q80 70 130 74" stroke="#d98a48" stroke-width="12" fill="none" stroke-linecap="round" opacity=".8"/>';
+    for (let i = 0; i < 6; i++) s += '<path d="M' + (56 + i * 17) + ' 70q6 22 0 50" stroke="#6b320f" stroke-width="3" fill="none" stroke-linecap="round" opacity=".6"/>';
+    s += '<g transform="translate(150 118) rotate(32)"><rect x="0" y="0" width="16" height="42" rx="8" fill="#7d3a1a"/><circle cx="5" cy="44" r="6" fill="#f3eadf"/><circle cx="13" cy="44" r="6" fill="#f3eadf"/></g>';
+    s += '<circle cx="52" cy="150" r="4" fill="#4a2a52"/><circle cx="68" cy="158" r="3.6" fill="#4a2a52"/><circle cx="96" cy="152" r="4" fill="#d6402f"/>';
+    return s + STEAM;
+  },
+  chickmandi1() { return chicken('whole', true); },
+  chickmandi2() { return chicken('half', true); },
+  chickmandi3() { return chicken('quarter', true); },
+  chickgrill1() { return chicken('whole', false); },
+  chickgrill2() { return chicken('half', false); },
+  yogbucket() { return bucket('#3f7ec9', '#1d4f8f', '#fbf7ef', false); },
+  chickskewer() {
+    let s = PLATE;
+    [62, 100, 138].forEach((y, r) => {
+      s += '<line x1="26" y1="' + y + '" x2="174" y2="' + y + '" stroke="#b88a55" stroke-width="3" stroke-linecap="round"/>';
+      for (let i = 0; i < 5; i++) {
+        const x = 36 + i * 26;
+        if (i % 2) s += '<circle cx="' + (x + 10) + '" cy="' + y + '" r="9" fill="' + (r === 1 ? '#e8c030' : '#6fb352') + '"/>';
+        else s += '<rect x="' + (x - 4) + '" y="' + (y - 12) + '" width="28" height="24" rx="9" fill="' + (i === 2 ? '#e8b660' : '#d79a40') + '"/><path d="M' + (x + 2) + ' ' + (y - 5) + 'h18M' + (x + 2) + ' ' + (y + 3) + 'h18" stroke="#9a5f1a" stroke-width="2" opacity=".55"/>';
+      }
+    });
+    return s + STEAM;
+  },
+  /* --- salads --- */
+  saladdakwa() {
+    let s = PLATE;
+    [[80, 78, '#5fa34a'], [122, 78, '#7bc05a'], [70, 116, '#7bc05a'], [130, 116, '#5fa34a'], [100, 100, '#6fb352']].forEach(p => { s += circ(p[0], p[1], 26, p[2]); });
+    s += '<path d="M44 96Q76 70 104 98T160 94" stroke="#a8672c" stroke-width="13" fill="none" stroke-linecap="round" opacity=".92"/><path d="M52 124Q86 104 112 126T156 120" stroke="#c4843a" stroke-width="9" fill="none" stroke-linecap="round" opacity=".9"/>';
+    [[70, 92], [98, 84], [126, 100], [86, 120], [116, 128], [140, 108], [60, 118]].forEach(p => { s += ellp(p[0], p[1], 4.4, 3.2, '#e2b06a') + ellp(p[0], p[1] - 1, 2.2, 1.2, '#f5d9a2'); });
+    return s + circ(100, 62, 11, '#d63b2d') + circ(96, 58, 3.5, '#f58a7c') + circ(98, 148, 11, '#d63b2d') + circ(94, 144, 3.5, '#f58a7c');
+  },
+  saladtahini() {
+    let s = PLATE;
+    [[70, 74], [102, 66], [134, 80], [60, 108], [96, 100], [138, 114], [78, 142], [112, 142]].forEach((p, i) => { s += i % 3 === 2 ? '<path d="M' + p[0] + ' ' + p[1] + 'l18 8l-8 18l-18-8Z" fill="#d63b2d"/><path d="M' + (p[0] + 2) + ' ' + (p[1] + 3) + 'l9 4" stroke="#f58a7c" stroke-width="2.5" stroke-linecap="round"/>' : '<circle cx="' + p[0] + '" cy="' + p[1] + '" r="14" fill="#cfe6a8" stroke="#7fb15a" stroke-width="2.5"/><circle cx="' + p[0] + '" cy="' + p[1] + '" r="7" fill="#e9f5cf"/>'; });
+    s += '<path d="M42 90q14-14 28 0t28 0t28 0t28 0M48 124q14-14 28 0t28 0t28 0" stroke="#f6ecd2" stroke-width="7" fill="none" stroke-linecap="round" opacity=".95"/>';
+    for (let i = 0; i < 26; i++) { const a = i * 2.4, r = 20 + (i * 9) % 52; s += circ((100 + Math.cos(a) * r).toFixed(1), (104 + Math.sin(a) * r * .8).toFixed(1), 1.5, '#e8d49a'); }
+    return s + PARSLEY(150, 56) + PARSLEY(52, 62);
+  },
+  onions() {
+    let s = PLATE;
+    [[100, 100, 44], [86, 92, 34], [114, 110, 30]].forEach(p => { s += '<circle cx="' + p[0] + '" cy="' + p[1] + '" r="' + p[2] + '" fill="none" stroke="#ead3f0" stroke-width="9"/><circle cx="' + p[0] + '" cy="' + p[1] + '" r="' + (p[2] - 12) + '" fill="none" stroke="#c79ad6" stroke-width="5"/>'; });
+    s += '<path d="M40 128Q76 100 104 126T164 112" stroke="#a8672c" stroke-width="14" fill="none" stroke-linecap="round" opacity=".92"/>';
+    [[60, 120], [92, 118], [124, 124], [150, 114]].forEach(p => { s += ellp(p[0], p[1], 4.4, 3.2, '#e2b06a'); });
+    return s + PARSLEY(100, 150) + PARSLEY(150, 62) + PARSLEY(50, 64);
+  },
+  pickles() {
+    let s = PLATE;
+    for (let i = 0; i < 5; i++) s += '<rect x="' + (46 + i * 22) + '" y="52" width="14" height="52" rx="7" fill="#f08a1c" transform="rotate(' + (-24 + i * 12) + ' ' + (53 + i * 22) + ' 78)"/><rect x="' + (50 + i * 22) + '" y="56" width="5" height="40" rx="2.5" fill="#ffc15a" opacity=".6" transform="rotate(' + (-24 + i * 12) + ' ' + (53 + i * 22) + ' 78)"/>';
+    [[56, 128], [86, 134], [116, 130]].forEach(p => { s += '<circle cx="' + p[0] + '" cy="' + p[1] + '" r="14" fill="#8fb85a" stroke="#5a8a35" stroke-width="2.5"/><circle cx="' + p[0] + '" cy="' + p[1] + '" r="6" fill="#d9eab4"/>'; });
+    s += '<path d="M138 120q18-6 22 14q-18 6-22-14Z" fill="#c43d8a"/><path d="M146 116q18-6 22 14q-18 6-22-14Z" fill="#e06aa8"/>' + CHILI(46, 150, -20) + CHILI(150, 56, 40);
+    return s;
+  },
+  /* --- juices --- */
+  pine() { return glass('#f6d24a', '#fff3a8', 'pine', { foam: '#fff8dc' }); },
+  mango() { return glass('#f7a823', '#ffd37a', 'mango', { foam: '#fff0cf' }); },
+  tabaldi() { return glass('#e9dcc2', '#fffaf0', 'baobab', { foam: '#fffaf0', ice: true }); },
+  lemonmint() { return glass('#c9e86a', '#f1ffc2', 'lemon', { ice: true, straw: '#6fb352' }); },
+  sharbot() { return glass('#b3123c', '#e8708a', 'none', { ice: true, straw: '#f3eadf' }); },
+  strawb() { return glass('#f2788e', '#ffc0cb', 'berry', { foam: '#ffe6ec' }); },
+  orangej() { return glass('#f08a1c', '#ffc15a', 'orange', { ice: true }); },
+  mixedj() { return glass('#f08a1c', '#ffc15a', 'mixed', { layers: ['#e8453c', '#f6a21e', '#f6d24a'] }); },
+  guavaj() { return glass('#f1858e', '#ffc1c6', 'guava', { foam: '#ffe9e6' }); },
+  soda() {
+    let s = DARK + '<path d="M91 30h18v20q0 8 10 22q14 22 14 44v36q0 10-10 10H77q-10 0-10-10v-36q0-22 14-44q10-14 10-22Z" fill="#8a4b1e"/>';
+    s += '<path d="M77 100h46v34H77Z" fill="#e0af55"/><path d="M80 108h40M80 118h40M80 126h26" stroke="#7a4a1a" stroke-width="3" stroke-linecap="round" opacity=".7"/><rect x="90" y="24" width="20" height="9" rx="3" fill="#c22f23"/><path d="M84 56l-6 38" stroke="#fff" stroke-opacity=".45" stroke-width="4" stroke-linecap="round"/>';
+    return s + circ(60, 70, 4, '#fff', .5) + circ(140, 58, 3, '#fff', .5) + circ(150, 100, 5, '#fff', .45) + circ(54, 120, 3.5, '#fff', .45) + circ(144, 140, 4, '#fff', .4);
+  },
+  ghubasha() { return glass('#f1d7a6', '#fff2d8', 'none', { foam: '#fffaf0', layers: ['#e9c58a', '#f1d7a6'], straw: '#c22f23' }); },
+  /* --- fish --- */
+  friedfish1() {
+    let s = PLATE + fishBody(94, 78, .95, '#d58a2a', '#f0b358', '#8a4a14') + fishBody(106, 128, .95, '#c97a22', '#e9a84a', '#7a3f10');
+    for (let i = 0; i < 22; i++) s += circ(40 + (i * 37) % 120, 62 + (i * 53) % 80, 1.6, '#fff1c8', .55);
+    return s + LEMON(160, 156) + PARSLEY(44, 158) + STEAM;
+  },
+  friedfish2() {
+    let s = PLATE + fishBody(98, 104, 1.05, '#d58a2a', '#f0b358', '#8a4a14');
+    for (let i = 0; i < 18; i++) s += circ(40 + (i * 37) % 120, 70 + (i * 53) % 64, 1.6, '#fff1c8', .55);
+    return s + LEMON(156, 152) + PARSLEY(44, 152) + STEAM;
+  },
+  tilapia() {
+    let s = PLATE + '<path d="M30 150q70-12 140 0" stroke="#5fa34a" stroke-width="12" fill="none" stroke-linecap="round"/>' + fishBody(100, 100, 1.08, '#b98a80', '#e4c0b6', '#7a5148');
+    s += '<circle cx="76" cy="78" r="8" fill="#d63b2d"/><circle cx="104" cy="74" r="8" fill="#d63b2d"/><circle cx="132" cy="84" r="8" fill="#d63b2d"/><circle cx="76" cy="78" r="4" fill="#f58a7c"/>' + LEMON(158, 152) + CHILI(40, 150, -30);
+    return s + STEAM;
+  },
+  fishfatta() {
+    let s = bowl('#e6c58a', '#fff0c8', '', false);
+    s += '<circle cx="100" cy="100" r="62" fill="#efd9a8"/>' + BREAD(60, 70, -14) + BREAD(92, 62, 8) + BREAD(120, 78, 22) + BREAD(70, 100, 18) + BREAD(104, 100, -10) + BREAD(130, 112, 6) + BREAD(80, 128, -6) + BREAD(112, 134, 14);
+    s += '<path d="M50 96q24 16 52 0t52-4" stroke="#c43d2a" stroke-width="7" fill="none" stroke-linecap="round" opacity=".9"/>' + fishBody(100, 112, .34, '#c98a45', '#e0a35c', '#7a4a22') + circ(70, 150, 5, '#6fb352') + circ(136, 148, 5, '#4f9a3a') + circ(100, 70, 4, '#6fb352');
+    return s + STEAM;
+  },
+  fishsoup() {
+    let s = bowl('#c5601c', '#f09a52', '<circle cx="100" cy="100" r="64" fill="#e07a2c"/><ellipse cx="84" cy="84" rx="26" ry="11" fill="#f7b070" opacity=".6"/>', true);
+    s += fishBody(98, 108, .46, '#e8c8a0', '#fff0d8', '#a87a52') + circ(66, 78, 4, '#4f9a3a') + circ(138, 84, 4, '#6fb352') + circ(140, 130, 4, '#4f9a3a') + circ(70, 138, 4, '#6fb352') + '<path d="M64 120q10-8 20 0" stroke="#fff" stroke-opacity=".4" stroke-width="3" fill="none"/>';
+    return s;
+  },
+  fishbucket() { return bucket('#e07a2c', '#8a3f0c', '#c5601c', true); },
+  /* --- soups, broast, sweets --- */
+  lambbucket() { return bucket('#8a4b1e', '#4a230a', '#a65a2a', true); },
+  lambsoup() {
+    return bowl('#8a4b1e', '#c88c52', '<circle cx="100" cy="100" r="64" fill="#a65a2a"/><ellipse cx="86" cy="86" rx="28" ry="12" fill="#d49a60" opacity=".6"/><g transform="rotate(-20 100 100)"><rect x="66" y="92" width="50" height="22" rx="11" fill="#5b2a14"/><rect x="108" y="96" width="30" height="8" rx="4" fill="#f3eadf"/><circle cx="140" cy="97" r="6" fill="#f3eadf"/><circle cx="140" cy="107" r="6" fill="#f3eadf"/></g><circle cx="76" cy="132" r="9" fill="#f0c24b"/><circle cx="126" cy="130" r="8" fill="#f0c24b"/><circle cx="62" cy="86" r="4" fill="#4f9a3a"/><circle cx="132" cy="76" r="4" fill="#6fb352"/>', true);
+  },
+  lambfatta() {
+    let s = bowl('#e6c58a', '#fff0c8', '<circle cx="100" cy="100" r="62" fill="#efd9a8"/>', false);
+    s += BREAD(58, 68, -14) + BREAD(92, 60, 8) + BREAD(122, 76, 22) + BREAD(66, 100, 18) + BREAD(130, 110, 6) + BREAD(80, 130, -6) + BREAD(114, 136, 14);
+    s += chunk(98, 100, 40, 24, -14, '#6b2f1c', '#a35a3a', false) + chunk(76, 118, 26, 16, 20, '#6b2f1c', '#a35a3a', false);
+    s += '<path d="M54 90q26 14 50-2t50 2" stroke="#fffaf0" stroke-width="8" fill="none" stroke-linecap="round"/>' + circ(122, 66, 4, '#6fb352') + circ(70, 80, 4, '#4f9a3a');
+    return s + STEAM;
+  },
+  broasthalf() {
+    const d = (rot, cx, cy) => '<g transform="translate(' + cx + ' ' + cy + ') rotate(' + rot + ')"><ellipse cx="-8" cy="0" rx="34" ry="24" fill="#bf6f22"/><ellipse cx="-14" cy="-7" rx="22" ry="10" fill="#e39b45" opacity=".75"/><path d="M-26 6q8 6 18 2" stroke="#8a4a14" stroke-width="3" fill="none" stroke-linecap="round"/><rect x="20" y="-5" width="36" height="10" rx="5" fill="#f3eadf"/><circle cx="58" cy="-6" r="6.5" fill="#f3eadf"/><circle cx="58" cy="6" r="6.5" fill="#f3eadf"/></g>';
+    let s = PLATE + d(-14, 78, 96);
+    [[146, 90, 18], [156, 104, 4], [138, 108, -14]].forEach(f => { s += '<rect x="' + f[0] + '" y="' + f[1] + '" width="7" height="34" rx="2" fill="#f0c24b" transform="rotate(' + f[2] + ' ' + f[0] + ' ' + f[1] + ')"/>'; });
+    return s + '<path d="M124 150q14-12 30 0q-14 10-30 0Z" fill="#c43d2a"/>' + STEAM;
+  },
+  fruitsalad() {
+    let s = bowl('#fbefe0', '#ffffff', '<circle cx="100" cy="100" r="64" fill="#fff6e8"/>', false);
+    const C = ['#e8453c', '#f6a21e', '#7bc05a', '#f6d24a', '#c43d8a', '#f2788e'];
+    for (let i = 0; i < 20; i++) { const a = i * 2.399, r = 8 + (i * 11) % 48; s += '<rect x="' + (100 + Math.cos(a) * r - 8).toFixed(1) + '" y="' + (100 + Math.sin(a) * r - 8).toFixed(1) + '" width="16" height="16" rx="4" fill="' + C[i % 6] + '" transform="rotate(' + (i * 29 % 60) + ' ' + (100 + Math.cos(a) * r).toFixed(1) + ' ' + (100 + Math.sin(a) * r).toFixed(1) + ')"/>'; }
+    return s + '<path d="M70 96q20 14 44-2t28 4" stroke="#fffaf0" stroke-width="8" fill="none" stroke-linecap="round" opacity=".9"/>' + circ(100, 98, 9, '#c4122f') + circ(97, 95, 3, '#f58a7c') + '<path d="M100 90q4-12 12-14" stroke="#3f7a32" stroke-width="2.5" fill="none"/>';
+  },
+  melonplate() {
+    const w = (x, y, r) => '<g transform="translate(' + x + ' ' + y + ') rotate(' + r + ')"><path d="M-34 0A34 34 0 0 0 34 0Z" fill="#2f7d3a"/><path d="M-30 0A30 30 0 0 0 30 0Z" fill="#dbe8b8"/><path d="M-27 0A27 27 0 0 0 27 0Z" fill="#e8453c"/><circle cx="-12" cy="9" r="2.4" fill="#1a1210"/><circle cx="3" cy="15" r="2.4" fill="#1a1210"/><circle cx="14" cy="8" r="2.4" fill="#1a1210"/></g>';
+    return PLATE + w(66, 84, -38) + w(134, 84, 38) + w(100, 122, 0);
+  },
   melon() { return DARK + '<g transform="translate(0 -20)">' + melonCore() + '</g>'; }
 };
 const art = n => '<svg viewBox="0 0 200 200" aria-hidden="true">' + (ART[n] || ART.mandi)() + '</svg>';
@@ -595,7 +986,6 @@ function fishSVG(c1, c2, c3) {
   return '<svg viewBox="0 0 120 60" aria-hidden="true"><g class="tail"><path d="M26 30L2 8Q12 30 2 52Z" fill="' + c3 + '"/></g><ellipse cx="62" cy="30" rx="42" ry="20" fill="' + c1 + '"/><path d="M22 32Q62 58 104 32Q62 46 22 32Z" fill="' + c2 + '"/><path d="M46 12Q64-4 86 12Q64 17 46 12Z" fill="' + c3 + '"/><path d="M60 38Q70 52 82 46Q72 38 60 38Z" fill="' + c3 + '"/><path d="M52 24q6 6 0 12M64 22q6 8 0 16M76 22q6 8 0 16" stroke="#000" stroke-opacity=".18" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M88 15Q97 30 88 45" stroke="#000" stroke-opacity=".3" stroke-width="2" fill="none"/><circle cx="99" cy="25" r="4" fill="#120c0b"/><circle cx="100" cy="24" r="1.4" fill="#fff"/></svg>';
 }
 const FISH_COL = { gold: ['#e0af55', '#f6d58b', '#c2872a'], ember: ['#d8452f', '#f08a5a', '#8f1f17'], pearl: ['#b9c9ce', '#eef3f2', '#7f97a0'] };
-const MELON_SVG = '<svg viewBox="14 76 172 94" aria-hidden="true">' + melonCore() + '</svg>';
 
 /* ---------------- data layer ---------------- */
 async function loadMenu() { return MENU; }   // swap for fetch()/Firebase/Supabase later
@@ -667,7 +1057,6 @@ function buildScene() {
     d.appendChild(b); sc.appendChild(d);
   });
   for (let i = 0; i < 20; i++) sc.appendChild(bubble("", 4, 15, 7, 16));
-  $("melon").innerHTML = MELON_SVG;
   const am = $("ambient");
   for (let i = 0; i < 10; i++) am.appendChild(bubble("", 5, 16, 16, 30));
   sizeScene();
@@ -800,11 +1189,12 @@ function copyText(text, btn, numEl) {
 
 /* ---------------- payment methods ---------------- */
 const PAY_ICON = {
-  bankak: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9.5 12 4l9 5.5v1H3zM5 12h2.5v6H5zm5.75 0h2.5v6h-2.5zM16.5 12H19v6h-2.5zM3 19.5h18V21H3z"/></svg>',
-  ocash: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6.5A2.5 2.5 0 0 1 6.5 4H18v3H6.5a.5.5 0 0 0 0 1H20a1 1 0 0 1 1 1v9a2 2 0 0 1-2 2H6.5A2.5 2.5 0 0 1 4 17.5zM16 12.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z"/></svg>',
-  fawry: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 3 5 13.5h6L10 21l9-11h-6z"/></svg>',
-  cashi: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 2h8a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm0 3v12h8V5zm4 13.2a1.1 1.1 0 1 0 0 2.2 1.1 1.1 0 0 0 0-2.2z"/></svg>'
+  bankak: '<svg viewBox="0 0 56 56" aria-hidden="true"><path class="e2" d="M28 5 5 19v5h46v-5Z"/><circle class="cut" cx="28" cy="17" r="3.2"/><rect class="e1" x="9" y="27" width="7" height="19" rx="2"/><rect class="e1" x="20.5" y="27" width="7" height="19" rx="2"/><rect class="e1" x="32" y="27" width="7" height="19" rx="2"/><rect class="e1" x="43" y="27" width="4" height="19" rx="2"/><rect class="e1" x="5" y="48" width="46" height="5" rx="2.5"/></svg>',
+  ocash: '<svg viewBox="0 0 56 56" aria-hidden="true"><rect class="e2" x="12" y="6" width="34" height="16" rx="5" transform="rotate(-9 29 14)"/><rect class="e1" x="5" y="17" width="46" height="33" rx="9"/><circle class="cut" cx="40" cy="33" r="6"/><circle class="e1" cx="40" cy="33" r="2.4"/><path class="st" d="M12 27h16" style="stroke:var(--c);opacity:.5"/></svg>',
+  fawry: '<svg viewBox="0 0 56 56" aria-hidden="true"><circle class="e2" cx="28" cy="28" r="23"/><path class="e1" d="M32 6 14 31h11l-3 19 20-27H30Z"/></svg>',
+  cashi: '<svg viewBox="0 0 56 56" aria-hidden="true"><rect class="e2" x="26" y="28" width="26" height="16" rx="4" transform="rotate(-12 39 36)"/><circle class="cut" cx="39" cy="36" r="3.4" transform="rotate(-12 39 36)"/><rect class="e1" x="11" y="5" width="25" height="46" rx="7"/><rect class="cut" x="15" y="12" width="17" height="30" rx="3"/><path class="st" d="M19.5 27l4 4 7-8" style="stroke:var(--ic)"/></svg>'
 };
+const CHECK_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
 let payActive = null;
 const isSet = v => !!v && !/^PLACEHOLDER/.test(String(v));
 
@@ -816,7 +1206,8 @@ function fillPay(panel) {
   panel.hidden = false;
   panel.style.setProperty("--c", p.color || "var(--gold)");
   panel.style.animation = "none"; void panel.offsetWidth; panel.style.animation = "";
-  panel.appendChild(el("div", "hd", p.name));
+  const hd = el("div", "hd"); panel.style.setProperty("--ic", p.ink || "#fff");
+  const em = el("span", "pd-em"); em.innerHTML = PAY_ICON[p.id] || ""; hd.appendChild(em); hd.appendChild(el("span", null, p.name)); panel.appendChild(hd);
   const line = el("div", "line");
   if (isSet(p.number)) {
     const num = el("span", "num", p.number); line.appendChild(num);
@@ -860,15 +1251,19 @@ function renderFoot() {
       const b = el("button", "pm"); b.type = "button"; b.dataset.id = p.id;
       b.style.setProperty("--c", p.color || "var(--gold)"); b.style.setProperty("--ic", p.ink || "#fff");
       b.setAttribute("aria-pressed", String(payActive === p.id));
+      const ck = el("span", "ck"); ck.innerHTML = CHECK_SVG; b.appendChild(ck);
       const lg = el("span", "lg"); lg.innerHTML = PAY_ICON[p.id] || PAY_ICON.bankak; b.appendChild(lg);
       b.appendChild(el("span", "nm", p.name));
       b.addEventListener("click", () => {
         payActive = payActive === p.id ? null : p.id;
         grid.querySelectorAll(".pm").forEach(x => x.setAttribute("aria-pressed", String(x.dataset.id === payActive)));
+        grid.classList.toggle("sel", !!payActive);
         fillPay(panel);
+        if (payActive) setTimeout(() => { try { panel.scrollIntoView({ behavior: "smooth", block: "nearest" }); } catch (e) {} }, 80);
       });
       grid.appendChild(b);
     });
+    grid.classList.toggle("sel", !!payActive);
     box.appendChild(grid); box.appendChild(panel); f.appendChild(box);
     fillPay(panel);
   }
@@ -957,7 +1352,6 @@ function runLoader() {
   const ld = $("loader"); if (!ld) return;
   try {
     $("lfish").innerHTML = fishSVG("#e0af55", "#f6d58b", "#c2872a");
-    $("lmelon").innerHTML = MELON_SVG;
     $("lname").textContent = pick(MENU.meta.name);
     const pt = ld.querySelector(".pt"); for (let i = 0; i < 8; i++) pt.appendChild(bubble("", 4, 11, 3, 6));
   } catch (e) {}
@@ -982,3 +1376,72 @@ function runLoader() {
 </script>
 
 </body></html>
+
+<script>
+/* ===== polish layer (visual only; the menu code above is untouched) ===== */
+(function () {
+  try {
+    const rm = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const $ = id => document.getElementById(id);
+
+    /* scroll progress bar + back-to-top ring */
+    const pg = document.createElement("div"); pg.className = "pgbar"; pg.setAttribute("aria-hidden", "true"); document.body.appendChild(pg);
+    const tt = document.createElement("button"); tt.className = "totop"; tt.type = "button";
+    tt.innerHTML = '<svg class="ring" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="20"/><circle class="prg" cx="24" cy="24" r="20"/></svg><svg class="ar" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V6M6 11l6-6 6 6"/></svg>';
+    document.body.appendChild(tt);
+    const C = 2 * Math.PI * 20;
+    const onScroll = () => {
+      const de = document.documentElement, max = de.scrollHeight - innerHeight, p = max > 0 ? Math.min(1, Math.max(0, scrollY / max)) : 0;
+      pg.style.transform = "scaleX(" + p.toFixed(4) + ")";
+      tt.style.setProperty("--p", (C * (1 - p)).toFixed(1));
+      tt.classList.toggle("show", scrollY > 600);
+      tt.setAttribute("aria-label", de.lang === "ar" ? "إلى الأعلى" : "Back to top");
+    };
+    addEventListener("scroll", onScroll, { passive: true }); addEventListener("resize", onScroll); onScroll();
+    tt.addEventListener("click", () => scrollTo({ top: 0, behavior: rm ? "auto" : "smooth" }));
+
+    /* scroll reveal for banners and rows that start below the fold */
+    const list = $("list");
+    if (!rm && list && "IntersectionObserver" in window) {
+      const io = new IntersectionObserver(es => es.forEach(e => {
+        if (!e.isIntersecting) return;
+        const t = e.target; t.style.transitionDelay = (t._d || 0) + "ms"; t.classList.add("in"); io.unobserve(t);
+      }), { rootMargin: "0px 0px -5% 0px", threshold: 0.06 });
+      const prep = () => {
+        let k = 0;
+        list.querySelectorAll(".row:not([data-rv]), .cat-head:not([data-rv])").forEach(el => {
+          el.dataset.rv = "1";
+          if (el.getBoundingClientRect().top > innerHeight * 0.92) { el.classList.add("rv"); el._d = (k++ % 5) * 55; io.observe(el); }
+        });
+      };
+      new MutationObserver(prep).observe(list, { childList: true, subtree: true }); prep();
+    }
+
+    /* tap / click ripple */
+    if (!rm) document.addEventListener("pointerdown", e => {
+      const t = e.target.closest && e.target.closest(".row, .chip, .pm, .cta, .copy"); if (!t) return;
+      const r = t.getBoundingClientRect(), d = Math.max(r.width, r.height) * 2, s = document.createElement("span");
+      s.className = "rip"; s.style.cssText = "width:" + d + "px;height:" + d + "px;left:" + (e.clientX - r.left - d / 2) + "px;top:" + (e.clientY - r.top - d / 2) + "px";
+      t.appendChild(s); setTimeout(() => s.remove(), 700);
+    }, { passive: true });
+
+    /* hero: golden sparkles + gentle pointer parallax */
+    const hero = document.querySelector(".hero");
+    if (hero && !rm) {
+      const sp = document.createElement("div"); sp.className = "sparks"; sp.setAttribute("aria-hidden", "true");
+      for (let i = 0; i < 18; i++) {
+        const s = document.createElement("i");
+        s.style.cssText = "left:" + (Math.random() * 94 + 3).toFixed(1) + "%;bottom:" + (Math.random() * 38 + 4).toFixed(1) + "%;--s:" + (3 + Math.random() * 6).toFixed(1) + "px;--d:" + (5 + Math.random() * 6).toFixed(1) + "s;--dl:-" + (Math.random() * 9).toFixed(1) + "s";
+        sp.appendChild(s);
+      }
+      hero.appendChild(sp);
+      hero.addEventListener("pointermove", e => {
+        const r = hero.getBoundingClientRect();
+        hero.style.setProperty("--mx", ((e.clientX - r.left) / r.width - 0.5).toFixed(3));
+        hero.style.setProperty("--my", ((e.clientY - r.top) / r.height - 0.5).toFixed(3));
+      }, { passive: true });
+      hero.addEventListener("pointerleave", () => { hero.style.setProperty("--mx", 0); hero.style.setProperty("--my", 0); });
+    }
+  } catch (e) { console.warn("polish layer skipped", e); }
+})();
+</script>
