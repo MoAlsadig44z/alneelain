@@ -457,7 +457,8 @@ html[dir="rtl"] .cat-head h2::after { background: linear-gradient(270deg, var(--
 @keyframes okpop { 0% { transform: scale(.85); } 60% { transform: scale(1.12); } 100% { transform: scale(1); } }
 
 /* ===== responsive layer ===== */
-:root { --px-l: max(16px, env(safe-area-inset-left, 0px)); --px-r: max(16px, env(safe-area-inset-right, 0px)); }
+:root { --px-l: max(12px, env(safe-area-inset-left, 0px)); --px-r: max(12px, env(safe-area-inset-right, 0px)); }
+html, body { margin: 0; }
 html { overflow-x: hidden; }
 body { padding-inline: 0; padding-left: var(--px-l); padding-right: var(--px-r); min-width: 0; }
 .bar { margin-inline: 0; margin-left: calc(var(--px-l) * -1); margin-right: calc(var(--px-r) * -1); padding-left: var(--px-l); padding-right: var(--px-r); }
