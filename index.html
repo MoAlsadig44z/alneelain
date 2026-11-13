@@ -622,7 +622,6 @@ const MENU = {
     { id: "grill", art: "mandi", name: { ar: "قسم المشويات", en: "Grills" }, items: [
       { id: "grill-01", name: { ar: "خروف مندي كامل", en: "Whole Lamb Mandi" }, price: 1100000, art: "lambwhole" },
       { id: "grill-02", name: { ar: "نص خروف مندي", en: "Half Lamb Mandi" }, price: 550000, art: "lambhalf" },
-      { id: "grill-03", name: { ar: "سمك مشوي", en: "Grilled Fish" }, price: 90000, art: "fish" },
       { id: "grill-04", name: { ar: "مندي لحمة", en: "Meat Mandi" }, price: 90000 },
       { id: "grill-05", name: { ar: "مندي فراخ", en: "Chicken Mandi (whole)" }, price: 80000, art: "chickmandi1" },
       { id: "grill-06", name: { ar: "مندي فراخ نص", en: "Chicken Mandi (half)" }, price: 40000, art: "chickmandi2" },
@@ -658,6 +657,8 @@ const MENU = {
     { id: "fish", art: "fish", name: { ar: "قسم الأسماك", en: "Fish" }, items: [
       { id: "fish-01", name: { ar: "كيلو عجل فرايد", en: "Fried Ajal Fish (1 kg)" }, price: 110000, art: "friedfish1" },
       { id: "fish-02", name: { ar: "نص كيلو عجل فرايد", en: "Fried Ajal Fish (½ kg)" }, price: 55000, art: "friedfish2" },
+      { id: "fish-07", name: { ar: "فيليه مشوي", en: "Grilled Fillet" }, price: 120000, art: "grilledfillet" },
+      { id: "grill-03", name: { ar: "سمك مشوي", en: "Grilled Fish" }, price: 95000, art: "fish" },
       { id: "fish-03", name: { ar: "كيلو سمك بلطي", en: "Tilapia (1 kg)" }, price: 85000, art: "tilapia" },
       { id: "fish-04", name: { ar: "فتة سمك", en: "Fish Fatta" }, price: 9000, art: "fishfatta" },
       { id: "fish-05", name: { ar: "شوربة سمك", en: "Fish Soup" }, price: 8000, art: "fishsoup" },
@@ -676,7 +677,9 @@ const MENU = {
       { id: "dessert-01", name: { ar: "صحن بطيخ", en: "Watermelon Plate" }, price: 30000, art: "melonplate" },
       { id: "dessert-02", name: { ar: "صحن فواكه", en: "Fruit Plate" }, price: 40000, art: "fruit" },
       { id: "dessert-03", name: { ar: "سلطة فواكه", en: "Fruit Salad" }, price: 20000, art: "fruitsalad" },
-      { id: "dessert-04", name: { ar: "كنافة", en: "Kunafa" }, price: 25000 }
+      { id: "dessert-04", name: { ar: "كنافة", en: "Kunafa" }, price: 25000 },
+      { id: "dessert-05", name: { ar: "كريم كراميل", en: "Cream Caramel" }, price: 10000, art: "creamcaramel" },
+      { id: "dessert-06", name: { ar: "أم علي", en: "Umm Ali" }, price: 10000, art: "ummali" }
     ]},
     { id: "hot", art: "tea", name: { ar: "المشروبات الساخنة", en: "Hot Drinks" }, items: [
       { id: "hot-01", name: { ar: "كباية شاي", en: "Tea Cup" }, price: 2, art: "tea" },
@@ -1051,6 +1054,28 @@ const ART = {
   melonplate() {
     const w = (x, y, r) => '<g transform="translate(' + x + ' ' + y + ') rotate(' + r + ')"><path d="M-34 0A34 34 0 0 0 34 0Z" fill="#2f7d3a"/><path d="M-30 0A30 30 0 0 0 30 0Z" fill="#dbe8b8"/><path d="M-27 0A27 27 0 0 0 27 0Z" fill="#e8453c"/><circle cx="-12" cy="9" r="2.4" fill="#1a1210"/><circle cx="3" cy="15" r="2.4" fill="#1a1210"/><circle cx="14" cy="8" r="2.4" fill="#1a1210"/></g>';
     return PLATE + w(66, 84, -38) + w(134, 84, 38) + w(100, 122, 0);
+  },
+  grilledfillet() {
+    let s = PLATE + '<path d="M30 106Q58 62 112 64Q154 66 174 96Q142 132 92 132Q46 134 30 106Z" fill="#c98a45"/><path d="M30 106Q58 62 112 64Q154 66 174 96Q120 84 30 106Z" fill="#f0c48a" opacity=".75"/><path d="M62 70l14 56M84 66l14 62M106 66l14 60M128 70l12 52M148 78l10 40" stroke="#6b3a14" stroke-width="5" stroke-linecap="round" opacity=".7"/>';
+    s += '<path d="M46 108q40-14 100-8" stroke="#fff1c8" stroke-width="3" fill="none" stroke-linecap="round" opacity=".45"/>';
+    for (let i = 0; i < 14; i++) s += circ(56 + (i * 29) % 100, 78 + (i * 41) % 44, 2.2, '#4f9a3a', .85);
+    s += '<circle cx="48" cy="150" r="11" fill="#d6402f"/><circle cx="44" cy="146" r="3.5" fill="#f58a7c"/>' + LEMON(156, 152) + PARSLEY(100, 154) + CHILI(150, 46, 0);
+    return s + STEAM;
+  },
+  creamcaramel() {
+    let s = PLATE + '<circle cx="100" cy="102" r="68" fill="#a85a14"/><circle cx="100" cy="102" r="68" fill="none" stroke="#d98a2e" stroke-width="3" opacity=".7"/><ellipse cx="78" cy="72" rx="26" ry="8" fill="#e8a548" opacity=".55"/>';
+    s += '<circle cx="100" cy="100" r="46" fill="#f3d68c"/><circle cx="100" cy="100" r="46" fill="none" stroke="#fff0c0" stroke-width="3" opacity=".8"/>';
+    s += '<circle cx="100" cy="100" r="38" fill="#c4731a"/><circle cx="100" cy="100" r="28" fill="#d98a2e" opacity=".8"/><ellipse cx="86" cy="86" rx="16" ry="8" fill="#ffd48a" opacity=".7"/>';
+    s += '<path d="M64 124q6 10 12 4M118 140q6 8 12 0M142 112q8 6 10-4M60 82q-8 8 0 14" stroke="#b5651a" stroke-width="5" fill="none" stroke-linecap="round" opacity=".8"/>';
+    s += '<path d="M138 56q12-14 24-6q-6 14-24 6Z" fill="#4f9a3a"/><path d="M138 56q10-6 20-6" stroke="#3f7a32" stroke-width="2" fill="none"/>' + circ(150, 64, 7, '#d4263a') + circ(148, 62, 2.2, '#f58a7c');
+    return s + '<path d="M60 90Q70 64 98 58" stroke="#fff" stroke-opacity=".4" stroke-width="5" fill="none" stroke-linecap="round"/>';
+  },
+  ummali() {
+    let s = bowl('#e9d9bd', '#ffffff', '<circle cx="100" cy="100" r="64" fill="#e6b45a"/><circle cx="100" cy="100" r="64" fill="none" stroke="#f6d58b" stroke-width="3" opacity=".8"/>', true);
+    s += ellp(78, 80, 22, 12, '#b9772a', .75) + ellp(124, 112, 24, 13, '#b9772a', .7) + ellp(88, 126, 16, 9, '#b9772a', .6) + ellp(120, 76, 14, 8, '#fff4d8', .8) + ellp(70, 108, 12, 7, '#fff4d8', .75) + ellp(108, 98, 10, 6, '#fff4d8', .7);
+    for (let i = 0; i < 9; i++) { const a = i * 2.399, r = 14 + (i * 9) % 38, x = (100 + Math.cos(a) * r).toFixed(1), y = (100 + Math.sin(a) * r).toFixed(1); s += '<ellipse cx="' + x + '" cy="' + y + '" rx="6" ry="3.5" fill="#f2d9a6" transform="rotate(' + (i * 40) + ' ' + x + ' ' + y + ')"/>'; }
+    for (let i = 0; i < 7; i++) { const a = i * 2.9 + 1, r = 12 + (i * 11) % 42; s += circ((100 + Math.cos(a) * r).toFixed(1), (100 + Math.sin(a) * r).toFixed(1), 3, i % 2 ? '#7fae3f' : '#4a2a52'); }
+    return s + '<path d="M62 78Q76 58 104 54" stroke="#fff" stroke-opacity=".38" stroke-width="5" fill="none" stroke-linecap="round"/>';
   },
   melon() { return DARK + '<g transform="translate(0 -20)">' + melonCore() + '</g>'; }
 };
